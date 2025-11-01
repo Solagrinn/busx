@@ -1,4 +1,18 @@
+
+```json
+{ 
+  "@antfu/eslint-config": "^6.2.0",
+  "eslint-plugin-format": "^1.0.2",
+  "@eslint-react/eslint-plugin": "^2.2.4"
+}
+```
+Added antfu Eslint config for one liner eslint configuration. https://github.com/antfu/eslint-config
+
 # React + TypeScript + Vite
+
+
+
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
