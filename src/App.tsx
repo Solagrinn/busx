@@ -1,6 +1,8 @@
+import { Typography } from '@mui/material'
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import './app/i18n.ts'
 import viteLogo from '/vite.svg'
 
 function App() {
@@ -28,8 +30,9 @@ function App() {
           {' '}
           <code>src/App.tsx</code>
           {' '}
-          and save to test HMR
+
         </p>
+        <Typography variant="h1" component="h1" sx={{ mb: 2 }}>and save to test HMR</Typography>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
