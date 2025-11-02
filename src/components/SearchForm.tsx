@@ -1,31 +1,37 @@
+import type { Agency } from '../types/schedules.ts'
 import type { ScheduleSearchFormData } from '../types/zodSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
+
 import {
   Button,
-  CircularProgress, // For loading state
+  CircularProgress,
   FormControl,
+  FormHelperText,
+  Grid,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
   TextField,
 } from '@mui/material' // MUI Imports
-
 import { Controller, useForm, useWatch } from 'react-hook-form' // Import Controller
-import { useAgencies } from '../hooks/useAgencies'
 import { ScheduleSearchSchema } from '../types/zodSchemas'
 
 interface SearchFormProps {
   onSubmit: (data: ScheduleSearchFormData) => void
+  agencies: Agency[] | undefined
+  isAgenciesLoading: boolean
+  isAgenciesError: boolean
 }
 
-export default function SearchForm({ onSubmit }: SearchFormProps) {
+export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAgenciesError }: SearchFormProps) {
   const {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
   } = useForm<ScheduleSearchFormData>({
     resolver: zodResolver(ScheduleSearchSchema),
-    mode: 'onBlur',
+    mode: 'onSubmit',
     defaultValues: {
       fromId: '',
       toId: '',
@@ -33,16 +39,8 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
     },
   })
 
-  const {
-    data: agencies,
-    isLoading: isAgenciesLoading,
-    isError: isAgenciesError,
-  } = useAgencies()
-
-  // Watch necessary values for dynamic filtering (e.g., cannot select same origin/dest)
   const fromId = useWatch({ control, name: 'fromId' })
   const toId = useWatch({ control, name: 'toId' })
-
 
   if (isAgenciesLoading) {
     return (
@@ -57,99 +55,122 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
   }
 
   return (
-  // 3. Form yapısı
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-0 md:grid md:grid-cols-4 md:gap-4 items-start">
+    <Paper sx={{
+      p: 2,
+      mx: 'auto',
+      maxWidth: 1000,
+      borderRadius: 8,
+      bgcolor: '#fff',
+    }}
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+            <Controller
+              name="fromId"
+              control={control}
+              render={({ field }) => (
+                <FormControl fullWidth error={!!errors.fromId}>
+                  <InputLabel id="fromId-label" shrink>Kalkış Yeri</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="fromId-label"
+                    label="Kalkış Yeri"
+                    displayEmpty
+                    disabled={isSubmitting}
+                  >
+                    <MenuItem value="" disabled>
+                      Kalkış Seçin
+                    </MenuItem>
+                    {agencies.filter(a => a.id !== toId).map(agency => (
+                      <MenuItem key={agency.id} value={agency.id}>
+                        {agency.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.fromId?.message && (
+                    <FormHelperText>
+                      {errors.fromId.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              )}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+            <Controller
+              name="toId"
+              control={control}
+              render={({ field }) => (
+                <FormControl fullWidth error={!!errors.toId}>
+                  <InputLabel id="toId-label" shrink>Varış Yeri</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="toId-label"
+                    label="Varış Yeri"
+                    displayEmpty
+                    disabled={isSubmitting}
+                  >
+                    <MenuItem value="" disabled>
+                      Varış Seçin
+                    </MenuItem>
+                    {agencies.filter(a => a.id !== fromId).map(agency => (
+                      <MenuItem key={agency.id} value={agency.id}>
+                        {agency.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.toId?.message && (
+                    <FormHelperText>
+                      {errors.toId.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              )}
+            />
+          </Grid>
+          <Grid container size={{ xs: 12, lg: 4 }}>
+            <Grid size={{ xs: 12, sm: 8, lg: 6 }}>
+              <Controller
+                name="date"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Tarih"
+                    type="date"
+                    fullWidth
+                    slotProps={{
+                      inputLabel: {
+                        shrink: true,
+                      },
+                    }}
+                    error={!!errors.date}
+                    helperText={errors.date?.message}
+                  />
+                )}
 
-      {/* 3.1. Kalkış Yeri (From) - Controlled by RHF Controller */}
-      <Controller
-        name="fromId"
-        control={control}
-        render={({ field }) => (
-          <FormControl fullWidth error={!!errors.fromId}>
-            <InputLabel id="fromId-label">Kalkış Yeri</InputLabel>
-            <Select
-              {...field} // RHF takes control here (value, onChange)
-              labelId="fromId-label"
-              label="Kalkış Yeri"
-              displayEmpty // Allows the placeholder option to be displayed
-              disabled={isSubmitting}
-            >
-              {/* Placeholder/Disabled option */}
-              <MenuItem value="" disabled>
-                Kalkış Seçin
-              </MenuItem>
-              {/* Render agency options, excluding the selected destination */}
-              {agencies.filter(a => a.id !== toId).map(agency => (
-                <MenuItem key={agency.id} value={agency.id}>
-                  {agency.name}
-                </MenuItem>
-              ))}
-            </Select>
-            {errors.fromId && <p className="mt-1 text-xs text-red-500">{errors.fromId.message}</p>}
-          </FormControl>
-        )}
-      />
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 4, lg: 6 }}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                fullWidth
+                disabled={isSubmitting}
+                sx={{ height: '100%', borderRadius: 4, p: 2 }}
+                startIcon={isSubmitting ? <CircularProgress size={20} color="inherit" /> : null}
+              >
+                {isSubmitting ? 'Aranıyor...' : 'Seferleri Bul'}
+              </Button>
+            </Grid>
 
-      {/* 3.2. Varış Yeri (To) - Controlled by RHF Controller */}
-      <Controller
-        name="toId"
-        control={control}
-        render={({ field }) => (
-          <FormControl fullWidth error={!!errors.toId}>
-            <InputLabel id="toId-label">Varış Yeri</InputLabel>
-            <Select
-              {...field}
-              labelId="toId-label"
-              label="Varış Yeri"
-              displayEmpty
-              disabled={isSubmitting}
-            >
-              <MenuItem value="" disabled>
-                Varış Seçin
-              </MenuItem>
-              {/* Render agency options, excluding the selected origin */}
-              {agencies.filter(a => a.id !== fromId).map(agency => (
-                <MenuItem key={agency.id} value={agency.id}>
-                  {agency.name}
-                </MenuItem>
-              ))}
-            </Select>
-            {errors.toId && <p className="mt-1 text-xs text-red-500">{errors.toId.message}</p>}
-          </FormControl>
-        )}
-      />
+          </Grid>
 
-      {/* 3.3. Tarih Seçimi (Date) - Using MUI TextField with register */}
-      <Controller
-        name="date"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Tarih"
-            type="date"
-            fullWidth
-            InputLabelProps={{ shrink: true }} // Ensures the label floats correctly for date type
-            error={!!errors.date}
-            helperText={errors.date?.message}
-          />
-        )}
-      />
+        </Grid>
 
-      {/* 3.4. Arama Butonu */}
-      <div className="md:mt-0 pt-0 flex items-end">
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          size="large"
-          disabled={isSubmitting}
-          startIcon={isSubmitting ? <CircularProgress size={20} color="inherit" /> : null}
-        >
-          {isSubmitting ? 'Aranıyor...' : 'Seferleri Bul'}
-        </Button>
-      </div>
-    </form>
+      </form>
+    </Paper>
   )
 }

@@ -1,5 +1,6 @@
 import type { ScheduleSearchParams } from '../types/schedules.ts'
 import type { ScheduleSearchFormData } from '../types/zodSchemas.ts'
+import { Typography } from '@mui/material'
 import { useCallback, useState } from 'react'
 import SearchForm from '../components/SearchForm.tsx'
 import { useAgencies } from '../hooks/useAgencies.ts'
@@ -18,7 +19,6 @@ export default function SearchPage() {
     data: agencies,
     isLoading: isAgenciesLoading,
     isError: isAgenciesError,
-    error: agenciesError,
   } = useAgencies()
 
   const {
@@ -53,10 +53,11 @@ export default function SearchPage() {
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      asdasdsa
       <div className="mb-8 p-6 bg-white shadow-lg rounded-lg">
-        <h1 className="text-3xl font-bold mb-4 text-indigo-700">Sefer Ara</h1>
-        <SearchForm onSubmit={handleSearchSubmit} />
+        <Typography variant="h4" component="h1" color="primary" fontWeight={600} gutterBottom>
+          BusX Sefer Arama
+        </Typography>
+        <SearchForm onSubmit={handleSearchSubmit} isAgenciesError={isAgenciesError} isAgenciesLoading={isAgenciesLoading} agencies={agencies} />
         <button
           type="button"
           onClick={() => {
