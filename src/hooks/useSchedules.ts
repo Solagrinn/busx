@@ -1,10 +1,4 @@
-/**
- * src/hooks/useSchedules.ts
- * Hook to fetch available trips (schedules) based on search criteria.
- * Uses the GET /api/schedules?from=...&to=...&date=... endpoint.
- */
-
-import type { Schedule, ScheduleSearchParams } from '../types/schedules' // Assuming this defines the trip structure
+import type { Schedule, ScheduleSearchParams } from '../types/schedules'
 import { useQuery } from '@tanstack/react-query'
 import { get } from '../services/apiClient'
 
