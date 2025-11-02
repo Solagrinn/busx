@@ -4,8 +4,7 @@
  * of API calls, responses, and errors.
  */
 
-// We assume the MSW worker is configured to intercept all calls to this base path.
-// Since you used 'https://busx/api' in your handlers, we'll use that here.
+// TODO: make this global
 const API_BASE_URL = 'https://busx/api'
 
 /**
@@ -28,7 +27,6 @@ class ApiError extends Error {
  */
 export async function get<T>(endpoint: string): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`
-
   const response = await fetch(url)
 
   if (!response.ok) {
