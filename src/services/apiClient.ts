@@ -37,9 +37,7 @@ export async function get<T>(endpoint: string): Promise<T> {
     )
   }
 
-  // Check for 204 No Content
   if (response.status === 204) {
-    // If the API returns No Content, return an empty object or array as appropriate
     return {} as T
   }
 

@@ -1,6 +1,8 @@
 import type { ScheduleSearchParams } from '../types/schedules.ts'
 import type { ScheduleSearchFormData } from '../types/zodSchemas.ts'
 import { useCallback, useState } from 'react'
+import SearchForm from '../components/SearchForm.tsx'
+import { useAgencies } from '../hooks/useAgencies.ts'
 import { useSchedules } from '../hooks/useSchedules.ts'
 
 const INITIAL_SEARCH_PARAMS: ScheduleSearchParams = {
@@ -12,7 +14,20 @@ const INITIAL_SEARCH_PARAMS: ScheduleSearchParams = {
 export default function SearchPage() {
   const [searchParams, setSearchParams] = useState<ScheduleSearchParams>(INITIAL_SEARCH_PARAMS)
 
-  const { data: schedules, isLoading, isError, error, isFetching } = useSchedules(searchParams)
+  const {
+    data: agencies,
+    isLoading: isAgenciesLoading,
+    isError: isAgenciesError,
+    error: agenciesError,
+  } = useAgencies()
+
+  const {
+    data: schedules,
+    isLoading: isSchedulesLoading, // Renamed 'isLoading'
+    isError: isSchedulesError, // Renamed 'isError'
+    error: schedulesError, // Renamed 'error'
+    isFetching: isSchedulesFetching,
+  } = useSchedules(searchParams)
 
   const handleSearchSubmit = useCallback((data: ScheduleSearchFormData) => {
     setSearchParams({
@@ -25,10 +40,10 @@ export default function SearchPage() {
   const hasSearched = !!(searchParams.fromId && searchParams.toId && searchParams.date)
 
   const statusMessage = (() => {
-    if (isLoading || isFetching)
+    if (isSchedulesLoading || isSchedulesFetching)
       return 'Seferler yükleniyor...'
-    if (isError)
-      return `Hata oluştu: ${error?.message || 'Bilinmeyen Hata'}`
+    if (isSchedulesError)
+      return `Hata oluştu: ${schedulesError?.message || 'Bilinmeyen Hata'}`
     if (hasSearched && schedules && schedules.length === 0)
       return 'Bu kriterlere uygun sefer bulunamadı.'
     if (!hasSearched)
@@ -41,7 +56,7 @@ export default function SearchPage() {
       asdasdsa
       <div className="mb-8 p-6 bg-white shadow-lg rounded-lg">
         <h1 className="text-3xl font-bold mb-4 text-indigo-700">Sefer Ara</h1>
-        {/* <SearchForm onSubmit={handleSearchSubmit} initialData={searchParams} /> */}
+        <SearchForm onSubmit={handleSearchSubmit} />
         <button
           type="button"
           onClick={() => {
@@ -52,15 +67,14 @@ export default function SearchPage() {
           asd
         </button>
       </div>
-      {/* 5. Dumb Component 2: Sonuç Listesi veya Durum Mesajı */}
+
       <div className="mt-8">
-        {(isLoading || isError || statusMessage) && (
-          <div className={`p-4 text-center rounded-lg ${isError ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'}`}>
+        {(isSchedulesLoading || isSchedulesError || statusMessage) && (
+          <div className={`p-4 text-center rounded-lg ${isSchedulesError ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'}`}>
             {statusMessage}
           </div>
         )}
 
-        {/* Sadece veri varsa ve yüklenme/hata yoksa listeyi göster */}
         {/* {hasSearched && schedules && schedules.length > 0 && (
           <ScheduleList schedules={schedules} />
         )} */}
