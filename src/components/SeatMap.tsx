@@ -79,7 +79,7 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
   const [selectedSeatNos, setSelectedSeatNos] = useState<number[]>([])
 
   const { layout, seats } = seatMapData
-  const { cells } = layout
+  const { cols, cells } = layout
 
   // Memoize the seat data lookup for performance.
   const seatLookup = useMemo(() => createSeatLookup(seats), [seats])
@@ -150,9 +150,9 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
 
   return (
     <Box>
-      <Grid container spacing={2} columns={10}>
+      <Grid container spacing={2} columns={cols}>
         <Grid container size={{ xs: 12 }}>
-          <Grid size={{ xs: 2 }} justifyItems="center">
+          <Grid size={{ xs: 1 }} justifyItems="center">
             <Box sx={{ backgroundColor: 'primary.main', ...defaultSeatStyles }}>
               <Typography fontWeight={500} sx={{ color: 'white' }}>Şoför</Typography>
             </Box>
@@ -167,7 +167,7 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
             const isClickableSeat = seat && (seat.status === SEAT_STATUS.EMPTY)
 
             return (
-              <Grid size={{ xs: 2 }} key={lookupKey} justifyItems="center">
+              <Grid size={{ xs: 1 }} key={lookupKey} justifyItems="center">
                 <Box
                   key={lookupKey}
 
