@@ -24,6 +24,18 @@ export const schedules = [
     departure: '2025-11-02T09:15:00+03:00',
     arrival: '2025-11-02T14:05:00+03:00',
     price: 720,
+    availableSeats: 12,
+  },
+
+  {
+    id: 'TRIP-1003',
+    company: 'Düzce Güven',
+    from: 'ist-bayrampasa',
+    to: 'ank-astim',
+    departure: '2025-11-02T12:15:00+03:00',
+    arrival: '2025-11-02T17:05:00+03:00',
+    price: 750,
+    availableSeats: 10,
   },
 ]
 

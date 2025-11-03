@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@mui/material'
+import { GlobalStyles, ThemeProvider } from '@mui/material'
 import { QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -14,6 +14,31 @@ async function enableMocking() {
   return Promise.resolve()
 }
 
+const globalRedStripStyles = (
+  <GlobalStyles
+    styles={{
+      'body': {
+        backgroundColor: '#f2f3f4',
+      },
+
+      'body::before': {
+        content: '""',
+        display: 'block',
+
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+
+        height: '150px',
+        backgroundColor: 'rgb(204, 0, 0)',
+
+        zIndex: -1,
+      },
+    }}
+  />
+)
+
 // 2. Render the app after the worker is ready.
 enableMocking().then(() => {
   // Note: You would typically include your main CSS file here too (e.g., './index.css')
@@ -21,6 +46,7 @@ enableMocking().then(() => {
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
+          {globalRedStripStyles}
           <App />
         </ThemeProvider>
       </QueryClientProvider>

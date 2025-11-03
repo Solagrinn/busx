@@ -1,7 +1,8 @@
 import type { ScheduleSearchParams } from '../types/schedules.ts'
 import type { ScheduleSearchFormData } from '../types/zodSchemas.ts'
 import { Typography } from '@mui/material'
-import { useCallback, useState } from 'react'
+import {useCallback, useState} from 'react'
+import ScheduleList from '../components/ScheduleList.tsx'
 import SearchForm from '../components/SearchForm.tsx'
 import { useAgencies } from '../hooks/useAgencies.ts'
 import { useSchedules } from '../hooks/useSchedules.ts'
@@ -23,9 +24,8 @@ export default function SearchPage() {
 
   const {
     data: schedules,
-    isLoading: isSchedulesLoading, // Renamed 'isLoading'
-    isError: isSchedulesError, // Renamed 'isError'
-    error: schedulesError, // Renamed 'error'
+    isLoading: isSchedulesLoading,
+    isError: isSchedulesError,
     isFetching: isSchedulesFetching,
   } = useSchedules(searchParams)
 
@@ -43,7 +43,7 @@ export default function SearchPage() {
     if (isSchedulesLoading || isSchedulesFetching)
       return 'Seferler yükleniyor...'
     if (isSchedulesError)
-      return `Hata oluştu: ${schedulesError?.message || 'Bilinmeyen Hata'}`
+      return `Hata oluştu`
     if (hasSearched && schedules && schedules.length === 0)
       return 'Bu kriterlere uygun sefer bulunamadı.'
     if (!hasSearched)
@@ -53,21 +53,11 @@ export default function SearchPage() {
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      <div className="mb-8 p-6 bg-white shadow-lg rounded-lg">
-        <Typography variant="h4" component="h1" color="primary" fontWeight={600} gutterBottom>
-          BusX Sefer Arama
-        </Typography>
-        <SearchForm onSubmit={handleSearchSubmit} isAgenciesError={isAgenciesError} isAgenciesLoading={isAgenciesLoading} agencies={agencies} />
-        <button
-          type="button"
-          onClick={() => {
-            const data = { fromId: 'ist-alibeykoy', toId: 'ank-astim', date: '2025-11-02' }
-            handleSearchSubmit(data)
-          }}
-        >
-          asd
-        </button>
-      </div>
+
+      <Typography variant="h4" component="h1" sx={{ color: 'white' }} fontWeight={600} gutterBottom>
+        BusX Sefer Arama
+      </Typography>
+      <SearchForm onSubmit={handleSearchSubmit} isAgenciesError={isAgenciesError} isAgenciesLoading={isAgenciesLoading} agencies={agencies} />
 
       <div className="mt-8">
         {(isSchedulesLoading || isSchedulesError || statusMessage) && (
@@ -76,9 +66,9 @@ export default function SearchPage() {
           </div>
         )}
 
-        {/* {hasSearched && schedules && schedules.length > 0 && (
-          <ScheduleList schedules={schedules} />
-        )} */}
+        {hasSearched && schedules && schedules.length > 0 && (
+          <ScheduleList schedules={schedules} isSchedulesError={isSchedulesError} isSchedulesLoading={isSchedulesLoading} isSchedulesFetching={isSchedulesFetching} />
+        )}
       </div>
     </div>
   )

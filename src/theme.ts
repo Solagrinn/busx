@@ -8,6 +8,7 @@ const BRAND_RED = {
 const TYPOGRAPHY_GRAY = {
   main: '#2c2c2c',
   light: '#5d686e',
+  white: '#ffffff',
 }
 
 const theme = createTheme({

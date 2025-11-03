@@ -12,21 +12,36 @@ export interface ScheduleSearchParams {
  * Represents a single available bus trip/schedule returned by the API.
  * GET /api/schedules
  */
-export interface Schedule {
-  id: string // e.g., "TRIP-1001"
-  company: string // e.g., "Atlas Lines"
-  from: string // Agency ID of the departure point (e.g., "ist-alibeykoy")
-  to: string // Agency ID of the arrival point (e.g., "ank-astim")
+export interface RawSchedule {
+  id: string
+  company: string
 
-  // ISO 8601 string including date, time, and timezone offset
-  // e.g., "2025-11-02T08:30:00+03:00"
+  from: string
+  to: string
+
   departure: string
-
-  // ISO 8601 string for arrival
   arrival: string
 
-  price: number // The ticket price in the local currency (e.g., 695)
-  availableSeats: number // The number of remaining seats (e.g., 18)
+  price: number
+  availableSeats: number
+}
+
+/**
+ * Represents a single available bus trip/schedule returned by the API.
+ * GET /api/schedules
+ */
+export interface Schedule {
+  id: string
+  company: string
+
+  from: string
+  to: string
+
+  departure: Date
+  arrival: Date
+
+  price: number
+  availableSeats: number
 }
 
 /**

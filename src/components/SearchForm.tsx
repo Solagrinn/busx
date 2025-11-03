@@ -57,8 +57,6 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
   return (
     <Paper sx={{
       p: 2,
-      mx: 'auto',
-      maxWidth: 1000,
       borderRadius: 8,
       bgcolor: '#fff',
     }}
