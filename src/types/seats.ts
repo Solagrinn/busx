@@ -13,7 +13,7 @@ export const SeatSchema = z.object({
 export const LayoutSchema = z.object({
   rows: z.number().int().positive('Number of rows is required'),
   cols: z.number().int().positive('Number of columns is required'),
-  cells: z.array(z.array(z.number().int())).optional(),
+  cells: z.array(z.array(z.number().int())),
 })
 
 export const RawSeatMapSchema = z.object({
@@ -44,4 +44,4 @@ export type Layout = z.infer<typeof LayoutSchema>
 /**
  * Type representing the full seat map structure, used as the output model.
  */
-export type SeatMap = z.infer<typeof RawSeatMapSchema>
+export type RawSeatMap = z.infer<typeof RawSeatMapSchema>
