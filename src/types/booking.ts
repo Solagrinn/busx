@@ -15,11 +15,7 @@ export const PassengerSchema = z.object({
   gender: z.enum(['male', 'female']),
 })
 
-export const TicketSaleRequestSchema = z.object({
-  tripId: z.string().min(1, 'Sefer ID gereklidir.'),
-  seats: z.array(z.number().int().positive('Koltuk numaraları geçerli olmalıdır.'))
-    .min(1, 'En az bir koltuk seçilmelidir.'),
-
+export const PassengerFormSchema = z.object({
   contact: ContactInfoSchema,
   passengers: z.array(PassengerSchema)
     .min(1, 'En az bir yolcu bilgisi girilmelidir.')
@@ -28,6 +24,13 @@ export const TicketSaleRequestSchema = z.object({
     }),
 })
 
+export const TicketSaleRequestSchema = z.object({
+  tripId: z.string().min(1, 'Sefer ID gereklidir.'),
+  seats: z.array(z.number().int().positive('Koltuk numaraları geçerli olmalıdır.'))
+    .min(1, 'En az bir koltuk seçilmelidir.'),
+}).extend(PassengerFormSchema.shape)
+
 export type ContactInfo = z.infer<typeof ContactInfoSchema>
 export type Passenger = z.infer<typeof PassengerSchema>
+export type PassengerFormData = z.infer<typeof PassengerFormSchema>
 export type TicketSaleRequest = z.infer<typeof TicketSaleRequestSchema>
