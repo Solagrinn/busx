@@ -1,6 +1,8 @@
-import { Alert, Box, Button, CircularProgress, Grid, Paper, Typography } from '@mui/material'
-import { useMemo, useState } from 'react'
+import type { PassengerFormData } from '../types/booking.ts'
+import { Alert, Box, CircularProgress, Grid, Paper, Typography } from '@mui/material'
+import { useCallback, useMemo, useState } from 'react'
 import { useParams } from 'react-router'
+import PassengerForm from '../components/PassengerForm.tsx'
 import SeatMap from '../components/SeatMap.tsx'
 import { useSeatSchema } from '../hooks/useSeatSchema.ts'
 /**
@@ -11,12 +13,33 @@ import { useSeatSchema } from '../hooks/useSeatSchema.ts'
 export default function SeatSelectionPage() {
   const { tripId } = useParams<string>()
   const { data: seatMap, isLoading, isError, error } = useSeatSchema(tripId)
-
   const [selectedSeats, setSelectedSeats] = useState<number[]>([])
 
   const handleSeatSelect = (newSelection: number[]) => {
     setSelectedSeats(newSelection)
   }
+  const handleFormSubmit = useCallback((data: PassengerFormData) => {
+    // 1. Update the local state with the valid form data
+
+    // 2. Prepare the final payload (matching TicketSaleRequestSchema)
+    // NOTE: In a real app, you would perform an API call here.
+    const ticketRequestPayload = {
+      tripId,
+      seats: selectedSeats,
+      contact: data.contact,
+      passengers: data.passengers.map((p, index) => ({
+        ...p,
+        // Assign the selected seat number to the passenger object
+        seat: selectedSeats[index] || p.seat,
+      })),
+    }
+
+    console.log('✅ Form Submitted Successfully. Prepared Ticket Sale Payload:', ticketRequestPayload)
+
+    // After setting the state/preparing payload, you would typically:
+    // a) Call an API to initiate payment
+    // b) Navigate to the payment confirmation page (e.g., router.push('/payment'))
+  }, [tripId, selectedSeats])
 
   const totalPrice = useMemo(() => {
     if (!seatMap)
@@ -71,7 +94,7 @@ export default function SeatSelectionPage() {
         </Grid>
 
         {/* Özet ve Form Bölümü (Sağ Kısım) */}
-        <Grid size={{ xs: 12, md: 5 }}>
+        <Grid size={{ xs: 12, md: 5 }} sx={{ maxWidth: 500 }}>
           <Paper elevation={4} sx={{ p: 3, borderRadius: 3, bgcolor: '#f5f5f5' }}>
             <Typography variant="h5" gutterBottom fontWeight="bold" color="primary.main">
               Seçim Özeti
@@ -104,22 +127,10 @@ export default function SeatSelectionPage() {
               </Typography>
             </Box>
 
-            <Button
-              variant="contained"
-              color="success"
-              size="large"
-              fullWidth
-              sx={{ mt: 3 }}
-              disabled={selectedSeats.length === 0}
-            >
-              Yolcu Bilgilerini Gir ve Öde (
-              {selectedSeats.length}
-              )
-            </Button>
-
             <Alert severity="info" sx={{ mt: 2, p: 1, textAlign: 'center' }}>
               Tek seferde maksimum 5 koltuk seçilebilir.
             </Alert>
+            <PassengerForm onSubmit={handleFormSubmit} selectedSeats={selectedSeats}></PassengerForm>
           </Paper>
         </Grid>
       </Grid>
