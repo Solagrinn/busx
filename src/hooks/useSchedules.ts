@@ -1,4 +1,4 @@
-import type { Schedule, ScheduleSearchParams } from '../types/schedules'
+import type { RawSchedule, Schedule, ScheduleSearchParams } from '../types/schedules'
 import { useQuery } from '@tanstack/react-query'
 import { get } from '../services/apiClient'
 
@@ -16,11 +16,18 @@ export function useSchedules(params: ScheduleSearchParams) {
   return useQuery<Schedule[], Error>({
     queryKey,
 
-    queryFn: () => {
+    queryFn: async () => {
       const queryString = `?from=${fromId}&to=${toId}&date=${date}`
       const endpoint = `/schedules${queryString}`
 
-      return get<Schedule[]>(endpoint)
+      const response = await get<RawSchedule[]>(endpoint)
+      return (
+        response.map(schedule => ({
+          ...schedule,
+          departure: new Date(schedule.departure),
+          arrival: new Date(schedule.arrival),
+        }))
+      )
     },
 
     enabled: isEnabled,
