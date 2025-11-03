@@ -1,5 +1,4 @@
-import type { Agency } from '../types/schedules.ts'
-import type { ScheduleSearchFormData } from '../types/zodSchemas'
+import type { Agency, ScheduleSearchFormData } from '../types/schedules.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -15,7 +14,7 @@ import {
   TextField,
 } from '@mui/material' // MUI Imports
 import { Controller, useForm, useWatch } from 'react-hook-form' // Import Controller
-import { ScheduleSearchSchema } from '../types/zodSchemas'
+import { ScheduleSearchSchema } from '../types/schedules.ts'
 
 interface SearchFormProps {
   onSubmit: (data: ScheduleSearchFormData) => void

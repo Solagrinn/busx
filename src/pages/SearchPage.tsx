@@ -1,20 +1,13 @@
-import type { ScheduleSearchParams } from '../types/schedules.ts'
-import type { ScheduleSearchFormData } from '../types/zodSchemas.ts'
+import type { ScheduleSearchFormData } from '../types/schedules.ts'
 import { Typography } from '@mui/material'
-import {useCallback, useState} from 'react'
+import { useCallback, useState } from 'react'
 import ScheduleList from '../components/ScheduleList.tsx'
 import SearchForm from '../components/SearchForm.tsx'
 import { useAgencies } from '../hooks/useAgencies.ts'
 import { useSchedules } from '../hooks/useSchedules.ts'
 
-const INITIAL_SEARCH_PARAMS: ScheduleSearchParams = {
-  fromId: '',
-  toId: '',
-  date: '',
-}
-
 export default function SearchPage() {
-  const [searchParams, setSearchParams] = useState<ScheduleSearchParams>(INITIAL_SEARCH_PARAMS)
+  const [searchParams, setSearchParams] = useState<ScheduleSearchFormData>({ fromId: '', toId: '', date: '' })
 
   const {
     data: agencies,

@@ -1,54 +1,52 @@
-/**
- * The parameters passed by the user to the GET /api/schedules endpoint.
- * These are used to filter the list of available trips.
- */
-export interface ScheduleSearchParams {
-  fromId: string
-  toId: string
-  date: string // YYYY-MM-DD format
-}
+import { z } from 'zod'
+
+export const ScheduleSearchSchema = z.object({
+  fromId: z.string().min(1, 'Kalkış yeri seçimi zorunludur.'),
+  toId: z.string().min(1, 'Varış yeri seçimi zorunludur.'),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Tarih YYYY-MM-DD formatında olmalıdır.'),
+}).refine(data => data.fromId !== data.toId, {
+  message: 'Kalkış ve varış yerleri aynı olamaz.',
+  path: ['toId'],
+})
+
+export const AgencySchema = z.object({
+  id: z.string().min(1, 'Ajans ID gereklidir.'),
+  name: z.string().min(2, 'Ajans adı gereklidir.'),
+})
+
+export const RawScheduleSchema = z.object({
+  id: z.string().min(1, 'Sefer ID gereklidir.'),
+  company: z.string().min(1, 'Şirket adı gereklidir.'),
+  from: z.string().min(1, 'Kalkış şehri/yeri gereklidir.'),
+  to: z.string().min(1, 'Varış şehri/yeri gereklidir.'),
+
+  departure: z.string().min(1, 'Kalkış saati string olarak gereklidir.'),
+  arrival: z.string().min(1, 'Varış saati string olarak gereklidir.'),
+
+  price: z.number().positive('Fiyat pozitif bir sayı olmalıdır.'),
+  availableSeats: z.number().int().min(0, 'Mevcut koltuk sayısı geçersiz.'),
+})
 
 /**
- * Represents a single available bus trip/schedule returned by the API.
- * GET /api/schedules
+ * Type used for raw API list response validation.
  */
-export interface RawSchedule {
-  id: string
-  company: string
-
-  from: string
-  to: string
-
-  departure: string
-  arrival: string
-
-  price: number
-  availableSeats: number
-}
+export type RawSchedule = z.infer<typeof RawScheduleSchema>
 
 /**
- * Represents a single available bus trip/schedule returned by the API.
- * GET /api/schedules
+ * Type used for Agency/Terminal list.
  */
-export interface Schedule {
-  id: string
-  company: string
+export type Agency = z.infer<typeof AgencySchema>
 
-  from: string
-  to: string
-
+/**
+ * The final processed schedule type used in the application.
+ * Dates are converted from string (RawSchedule) to Date objects.
+ */
+export type Schedule = Omit<RawSchedule, 'departure' | 'arrival'> & {
   departure: Date
   arrival: Date
-
-  price: number
-  availableSeats: number
 }
 
 /**
- * Represents a bus agency/terminal for the dropdown lists.
- * GET /api/reference/agencies
+ * Type for schedule search form data, used for validation and type inference.
  */
-export interface Agency {
-  id: string // e.g., "ist-alibeykoy"
-  name: string // e.g., "İstanbul – Alibeyköy"
-}
+export type ScheduleSearchFormData = z.infer<typeof ScheduleSearchSchema>

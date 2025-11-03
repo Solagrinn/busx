@@ -1,4 +1,4 @@
-import type { TicketSaleRequest } from '../types/seats.ts'
+import type { TicketSaleRequest } from '../types/booking.ts'
 import { isSameDay, parseISO } from 'date-fns'
 import { http, HttpResponse } from 'msw'
 import { agencies, schedules, seatSchemas } from './mockData.ts'

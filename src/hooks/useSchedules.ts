@@ -1,4 +1,4 @@
-import type { RawSchedule, Schedule, ScheduleSearchParams } from '../types/schedules'
+import type { RawSchedule, Schedule, ScheduleSearchFormData } from '../types/schedules'
 import { useQuery } from '@tanstack/react-query'
 import { get } from '../services/apiClient'
 
@@ -6,7 +6,7 @@ import { get } from '../services/apiClient'
  * Hook to fetch a list of schedules matching the search criteria.
  * @param params The search criteria (from, to, date).
  */
-export function useSchedules(params: ScheduleSearchParams) {
+export function useSchedules(params: ScheduleSearchFormData) {
   const { fromId, toId, date } = params
 
   const isEnabled = !!fromId && !!toId && !!date

@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
+import SeatSelectionPage from '../pages/SeatSelectionPage.tsx'
 
 const SearchPage = lazy(() => import('../pages/SearchPage'))
 /* const SeatSelectionPage = lazy(() => import('../pages/SeatSelectionPage'))
@@ -12,13 +13,7 @@ const AppRouter: React.FC = () => {
         <Routes>
           <Route path="/" element={<SearchPage />} />
 
-          {/* Koltuk Seçimi Sayfası: /seats/:scheduleId
-            Sefer ID'sine göre koltuk düzenini gösterir ve seçimi yönetir.
-            `:scheduleId` kısmı bir URL parametresidir.
-          */}
-
-          {/* <Route path="/seats/:scheduleId" element={<SeatSelectionPage />} />
-          <Route path="/summary" element={<SummaryPage />} /> */}
+          <Route path="/trip/:scheduleId" element={<SeatSelectionPage />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
 
