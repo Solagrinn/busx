@@ -13,7 +13,7 @@ const AppRouter: React.FC = () => {
         <Routes>
           <Route path="/" element={<SearchPage />} />
 
-          <Route path="/trip/:scheduleId" element={<SeatSelectionPage />} />
+          <Route path="/trip/:tripId" element={<SeatSelectionPage />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
 
