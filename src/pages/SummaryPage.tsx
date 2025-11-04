@@ -91,6 +91,7 @@ export default function SummaryPage() {
             )}
 
             <Button
+              className="no-print"
               variant="contained"
               color="success"
               size="large"
@@ -110,6 +111,7 @@ export default function SummaryPage() {
             </Button>
 
             <Button
+              className="no-print"
               variant="outlined"
               fullWidth
               sx={{ mt: 1 }}

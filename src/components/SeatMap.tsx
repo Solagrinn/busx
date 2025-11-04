@@ -191,7 +191,7 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
           :
           {calculateTotal.toFixed(2)}
           {' '}
-          TL
+          TRY
         </Typography>
       </Box>
 

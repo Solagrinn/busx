@@ -16,7 +16,7 @@ export default function PriceSummary({ ticket, totalPrice }: PriceSummaryProps) 
       <Typography variant="h4" component="h1" gutterBottom color="primary.main" fontWeight={700}>
         {t('title')}
       </Typography>
-      <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 3 }}>
+      <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 3 }} className="no-print">
         {t('subtitle')}
       </Typography>
 

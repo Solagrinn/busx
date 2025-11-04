@@ -42,10 +42,16 @@ function App() {
 
             transition: 'background-color 0.3s ease',
           },
+
+          '@media print': {
+            '.no-print': {
+              display: 'none !important',
+            },
+          },
         }}
       />
 
-      <Box sx={{ position: 'fixed' }}>
+      <Box sx={{ position: 'fixed' }} className="no-print">
         <Grid container spacing={1}>
           <Grid size="auto">
             <ThemeSwitcher

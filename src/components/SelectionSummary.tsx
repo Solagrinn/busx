@@ -33,7 +33,7 @@ export default function SelectionSummary({ unitPrice, totalPrice, selectedSeats 
           <span>
             {unitPrice}
             {' '}
-            TL
+            TRY
           </span>
         </Typography>
       </Box>
@@ -55,7 +55,7 @@ export default function SelectionSummary({ unitPrice, totalPrice, selectedSeats 
         <Typography variant="h4" fontWeight="bold" color="error.main">
           {totalPrice.toFixed(2)}
           {' '}
-          TL
+          TRY
         </Typography>
       </Box>
 
