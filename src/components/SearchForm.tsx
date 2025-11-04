@@ -30,7 +30,7 @@ export default function SearchForm({
   isAgenciesError,
 }: SearchFormProps) {
   const { t } = useTranslation('search')
-  const { t: v } = useTranslation('validation') // ✅ second namespace for validation
+  const { t: v } = useTranslation('validation') // ✅ second namespace for validation messages
 
   const {
     handleSubmit,
@@ -95,7 +95,7 @@ export default function SearchForm({
                       ))}
                   </Select>
                   {errors.fromId?.message && (
-                    <FormHelperText>{v(errors.fromId.message)}</FormHelperText>
+                    <FormHelperText>{v(`schedule.fromId`)}</FormHelperText>
                   )}
                 </FormControl>
               )}
@@ -131,7 +131,7 @@ export default function SearchForm({
                       ))}
                   </Select>
                   {errors.toId?.message && (
-                    <FormHelperText>{v(errors.toId.message)}</FormHelperText>
+                    <FormHelperText>{v(`schedule.toId`)}</FormHelperText>
                   )}
                 </FormControl>
               )}
@@ -154,7 +154,7 @@ export default function SearchForm({
                       inputLabel: { shrink: true },
                     }}
                     error={!!errors.date}
-                    helperText={errors.date?.message && v(errors.date.message)}
+                    helperText={errors.date?.message && v('schedule.date')}
                   />
                 )}
               />
@@ -169,11 +169,7 @@ export default function SearchForm({
                 disabled={isSubmitting}
                 sx={{ height: '100%', borderRadius: 4, p: 2 }}
                 startIcon={
-                  isSubmitting
-                    ? (
-                        <CircularProgress size={20} color="inherit" />
-                      )
-                    : null
+                  isSubmitting ? <CircularProgress size={20} color="inherit" /> : null
                 }
               >
                 {isSubmitting ? t('searching') : t('findTrips')}

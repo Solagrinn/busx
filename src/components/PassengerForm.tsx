@@ -13,10 +13,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { getPassengerFormSchema } from '../types/booking'
+import { PassengerFormSchema } from '../types/booking' // import directly
 
 interface PassengerFormProps {
   onSubmit: (data: PassengerFormData) => void
@@ -24,9 +24,8 @@ interface PassengerFormProps {
 }
 
 export default function PassengerForm({ onSubmit, selectedSeats }: PassengerFormProps) {
-  const { t, i18n } = useTranslation('passenger')
-
-  const { PassengerFormSchema } = useMemo(() => getPassengerFormSchema(), [i18n.language])
+  const { t } = useTranslation('passenger')
+  const { t: v } = useTranslation('validation') // ✅ second namespace for validation
 
   const {
     handleSubmit,
@@ -86,7 +85,7 @@ export default function PassengerForm({ onSubmit, selectedSeats }: PassengerForm
                   fullWidth
                   {...register('contact.email')}
                   error={!!errors.contact?.email}
-                  helperText={errors.contact?.email?.message}
+                  helperText={errors.contact?.email?.message && v('email.invalid')}
                 />
               </Grid>
               <Grid size={12}>
@@ -95,7 +94,7 @@ export default function PassengerForm({ onSubmit, selectedSeats }: PassengerForm
                   fullWidth
                   {...register('contact.phone')}
                   error={!!errors.contact?.phone}
-                  helperText={errors.contact?.phone?.message}
+                  helperText={errors.contact?.phone?.message && v('phone.invalid')}
                   placeholder={t('contact.phonePlaceholder')}
                 />
               </Grid>
@@ -140,7 +139,9 @@ export default function PassengerForm({ onSubmit, selectedSeats }: PassengerForm
                         fullWidth
                         {...register(`passengers.${index}.firstName`)}
                         error={!!errors.passengers?.[index]?.firstName}
-                        helperText={errors.passengers?.[index]?.firstName?.message}
+                        helperText={
+                          errors.passengers?.[index]?.firstName?.message && v('firstname.short')
+                        }
                       />
                     </Grid>
 
@@ -150,7 +151,9 @@ export default function PassengerForm({ onSubmit, selectedSeats }: PassengerForm
                         fullWidth
                         {...register(`passengers.${index}.lastName`)}
                         error={!!errors.passengers?.[index]?.lastName}
-                        helperText={errors.passengers?.[index]?.lastName?.message}
+                        helperText={
+                          errors.passengers?.[index]?.lastName?.message && v('lastname.short')
+                        }
                       />
                     </Grid>
 
@@ -160,7 +163,7 @@ export default function PassengerForm({ onSubmit, selectedSeats }: PassengerForm
                         fullWidth
                         {...register(`passengers.${index}.idNo`)}
                         error={!!errors.passengers?.[index]?.idNo}
-                        helperText={errors.passengers?.[index]?.idNo?.message}
+                        helperText={errors.passengers?.[index]?.idNo?.message && v('id.invalid')}
                       />
                     </Grid>
 
