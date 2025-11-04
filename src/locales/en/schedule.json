@@ -8,5 +8,5 @@
   "noTrips": "No trips found for these criteria",
   "company": "Company",
   "availableSeats": "{{count}} Seats",
-  "price": "{{price}} TL"
+  "price": "{{price}} TRY"
 }
