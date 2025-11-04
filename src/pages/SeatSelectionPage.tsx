@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import PassengerForm from '../components/PassengerForm.tsx'
 import SeatMap from '../components/SeatMap.tsx'
+import SelectionSummary from '../components/SelectionSummary.tsx'
 import { useSeatSchema } from '../hooks/useSeatSchema.ts'
 
 export default function SeatSelectionPage() {
@@ -62,9 +63,11 @@ export default function SeatSelectionPage() {
   if (isError || !seatMap) {
     return (
       <Alert severity="error" sx={{ m: 4 }}>
-        Koltuk haritası yüklenirken bir hata oluştu:
-        {' '}
-        {error?.message || 'Bilinmeyen Hata'}
+        <Typography variant="body1" fontWeight="bold">
+          Koltuk haritası yüklenirken bir hata oluştu:
+          {' '}
+        </Typography>
+        <Typography variant="body2">{error?.message || 'Bilinmeyen Hata'}</Typography>
       </Alert>
     )
   }
@@ -92,40 +95,7 @@ export default function SeatSelectionPage() {
 
         <Grid size={{ xs: 12, md: 5 }} sx={{ maxWidth: 500 }}>
           <Paper elevation={4} sx={{ p: 3, borderRadius: 3, bgcolor: '#f5f5f5' }}>
-            <Typography variant="h5" gutterBottom fontWeight="bold" color="primary.main">
-              Seçim Özeti
-            </Typography>
-            <Box sx={{ my: 2 }}>
-              <Typography variant="body1">
-                Seçilen Koltuklar:
-                <span>
-                  {selectedSeats.length > 0 ? selectedSeats.join(', ') : 'Seçim yapılmadı'}
-                </span>
-              </Typography>
-              <Typography variant="body1" sx={{ mt: 1 }}>
-                Koltuk Başı Fiyat:
-                <span>
-                  {seatMap.unitPrice}
-                  {' '}
-                  TL
-                </span>
-              </Typography>
-            </Box>
-
-            <Box sx={{ borderTop: '2px solid #ccc', pt: 2, mt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="h5" fontWeight="bold">
-                Toplam Tutar:
-              </Typography>
-              <Typography variant="h4" fontWeight="bold" color="error.main">
-                {totalPrice.toFixed(2)}
-                {' '}
-                TL
-              </Typography>
-            </Box>
-
-            <Alert severity="info" sx={{ mt: 2, p: 1, textAlign: 'center' }}>
-              Tek seferde maksimum 4 koltuk seçilebilir.
-            </Alert>
+            <SelectionSummary selectedSeats={selectedSeats} totalPrice={totalPrice} unitPrice={seatMap.unitPrice}></SelectionSummary>
 
             {selectedSeats.length > 0 && (
               <PassengerForm onSubmit={handleFormValidate} selectedSeats={selectedSeats} />
