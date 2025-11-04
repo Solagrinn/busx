@@ -1,5 +1,6 @@
+import type { AlertColor } from '@mui/material'
 import type { ScheduleSearchFormData } from '../types/schedules.ts'
-import { CircularProgress, Grid, Paper, Typography } from '@mui/material'
+import { Alert, CircularProgress, Grid, Paper, Typography } from '@mui/material'
 import { useCallback, useState } from 'react'
 import ScheduleList from '../components/ScheduleList.tsx'
 import SearchForm from '../components/SearchForm.tsx'
@@ -32,16 +33,17 @@ export default function SearchPage() {
 
   const hasSearched = !!(searchParams.fromId && searchParams.toId && searchParams.date)
 
-  const statusMessage = (() => {
+  const status: { alertSeverity: AlertColor, message: string } | null = (() => {
     if (isSchedulesLoading || isSchedulesFetching)
-      return 'Seferler yükleniyor...'
+      return { alertSeverity: 'info', message: 'Seferler yükleniyor...' }
     if (isSchedulesError)
-      return `Hata oluştu`
+      return { alertSeverity: 'error', message: 'Hata oluştu' }
     if (hasSearched && schedules && schedules.length === 0)
-      return 'Bu kriterlere uygun sefer bulunamadı.'
+      return { alertSeverity: 'warning', message: 'Bu kriterlere uygun sefer bulunamadı.' }
     if (!hasSearched)
-      return 'Lütfen kalkış, varış ve tarihi seçerek arama yapınız.'
-    return ''
+      return { alertSeverity: 'info', message: 'Lütfen kalkış, varış ve tarihi seçerek arama yapınız.' }
+
+    return null
   })()
 
   return (
@@ -52,10 +54,12 @@ export default function SearchPage() {
       </Typography>
       <SearchForm onSubmit={handleSearchSubmit} isAgenciesError={isAgenciesError} isAgenciesLoading={isAgenciesLoading} agencies={agencies} />
 
-      {(isSchedulesLoading || isSchedulesError || statusMessage) && (
-        <div>
-          {statusMessage}
-        </div>
+      {status && (
+        <Alert severity={status.alertSeverity} sx={{ m: 4 }}>
+          <Typography variant="body1" fontWeight="bold">
+            {status.message}
+          </Typography>
+        </Alert>
       )}
 
       {isSchedulesLoading && (
