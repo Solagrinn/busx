@@ -14,9 +14,7 @@ export function useAgencies() {
     queryFn: () => {
       return get<Agency[]>('/reference/agencies')
     },
-
     staleTime: 1000 * 60 * 60,
-
     gcTime: 1000 * 60 * 60 * 24,
   })
 }

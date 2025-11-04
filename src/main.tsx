@@ -41,9 +41,7 @@ const globalRedStripStyles = (
   />
 )
 
-// 2. Render the app after the worker is ready.
 enableMocking().then(() => {
-  // Note: You would typically include your main CSS file here too (e.g., './index.css')
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>

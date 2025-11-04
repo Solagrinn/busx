@@ -5,12 +5,7 @@ interface DropdownArrowButtonProps {
   size: number
 }
 
-/**
- * A reusable button that displays a right arrow (>) and rotates 90 degrees
- * clockwise when the isActive prop is true.
- */
-export default function DropdownArrowButton({ onClick, size }: DropdownArrowButtonProps) {
-  // A simple SVG for the right arrow (>)
+export default function ArrowIcon({ onClick, size }: DropdownArrowButtonProps) {
   const ArrowIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"

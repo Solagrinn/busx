@@ -22,7 +22,6 @@ export const RawSeatMapSchema = z.object({
   layout: LayoutSchema,
   unitPrice: z.number().positive('Unit price is required'),
 
-  // The map is an array of individual seats
   seats: z.array(SeatSchema).min(1, 'Seat map must contain at least one seat'),
 })
 

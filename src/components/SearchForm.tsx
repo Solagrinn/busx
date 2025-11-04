@@ -34,7 +34,7 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
     defaultValues: {
       fromId: '',
       toId: '',
-      date: new Date().toISOString().substring(0, 10), // Default to today's date
+      date: new Date().toISOString().substring(0, 10), // Todo: cant select lower than today
     },
   })
 
@@ -43,14 +43,14 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
 
   if (isAgenciesLoading) {
     return (
-      <div className="p-4 flex justify-center items-center">
+      <div>
         <CircularProgress size={24} className="mr-2" />
-        <p className="text-gray-500">Kalkış/Varış verileri yükleniyor...</p>
+        <p>Kalkış/Varış verileri yükleniyor...</p>
       </div>
     )
   }
   if (isAgenciesError || !agencies) {
-    return <p className="text-red-500 p-4 text-center">Acente verileri yüklenemedi. Lütfen API'yi kontrol edin.</p>
+    return <p>Acente verileri yüklenemedi. Lütfen API'yi kontrol edin.</p>
   }
 
   return (

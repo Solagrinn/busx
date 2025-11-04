@@ -8,9 +8,7 @@ import { get } from '../services/apiClient'
  */
 export function useSchedules(params: ScheduleSearchFormData) {
   const { fromId, toId, date } = params
-
   const isEnabled = !!fromId && !!toId && !!date
-
   const queryKey = ['schedules', fromId, toId, date]
 
   return useQuery<Schedule[], Error>({

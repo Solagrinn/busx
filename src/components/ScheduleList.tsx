@@ -1,23 +1,19 @@
 import type { Schedule } from '../types/schedules.ts'
 
 import {
-  CircularProgress,
   Grid,
   Paper,
   Typography,
 } from '@mui/material'
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router'
-import DropdownArrowButton from '../assets/DropdownArrowButton.tsx'
+import ArrowIcon from '../assets/ArrowIcon.tsx'
 
 interface ScheduleListProps {
   schedules: Schedule[]
-  isSchedulesLoading: boolean
-  isSchedulesError: boolean
-  isSchedulesFetching: boolean
 }
 
-export default function ScheduleList({ schedules, isSchedulesLoading, isSchedulesError, isSchedulesFetching }: ScheduleListProps) {
+export default function ScheduleList({ schedules }: ScheduleListProps) {
   const navigate = useNavigate()
 
   const handleSelectTrip = (id: string) => {
@@ -33,30 +29,6 @@ export default function ScheduleList({ schedules, isSchedulesLoading, isSchedule
     }}
     >
 
-      {isSchedulesLoading && (
-        <Paper
-          sx={{
-            p: 2,
-            borderRadius: 2,
-            backgroundColor: '#efefef',
-
-          }}
-        >
-          <Grid container justifyContent="center">
-            <Grid sx={{ pr: 2 }}><CircularProgress size={42} sx={{ color: 'text.disabled' }} /></Grid>
-            <Grid>
-              <Typography
-                variant="h4"
-                sx={{ fontWeight: 600, color: 'text.disabled' }} // Uses your themed color/font weight
-              >
-                Yükleniyor..
-              </Typography>
-            </Grid>
-          </Grid>
-
-        </Paper>
-      )}
-
       {schedules?.length === 0 && (
         <Paper
           sx={{
@@ -69,7 +41,7 @@ export default function ScheduleList({ schedules, isSchedulesLoading, isSchedule
 
           <Typography
             variant="h4"
-            sx={{ fontWeight: 600, color: 'text.disabled' }} // Uses your themed color/font weight
+            sx={{ fontWeight: 600, color: 'text.disabled' }}
           >
             Bu kriterlerde bir sefer yok
           </Typography>
@@ -94,7 +66,7 @@ export default function ScheduleList({ schedules, isSchedulesLoading, isSchedule
 
                     <Typography
                       variant="body1"
-                      sx={{ fontWeight: 600, color: 'text.primary' }} // Uses your themed color/font weight
+                      sx={{ fontWeight: 600, color: 'text.primary' }}
                     >
                       {schedule.company}
                     </Typography>
@@ -123,7 +95,7 @@ export default function ScheduleList({ schedules, isSchedulesLoading, isSchedule
                 </Grid>
               </Grid>
               <Grid size="auto">
-                <DropdownArrowButton onClick={() => { handleSelectTrip(schedule.id) }} size={40}></DropdownArrowButton>
+                <ArrowIcon onClick={() => { handleSelectTrip(schedule.id) }} size={40}></ArrowIcon>
               </Grid>
 
             </Grid>

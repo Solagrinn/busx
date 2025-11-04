@@ -6,7 +6,6 @@ import { Box, Grid, Typography } from '@mui/material'
  */
 import React, { useMemo, useState } from 'react'
 
-// Zod Enum'larını kullanmak için bir sabit oluşturalım (daha kolay erişim için)
 const SEAT_STATUS = {
   EMPTY: 'empty',
   TAKEN: 'taken',
@@ -14,22 +13,16 @@ const SEAT_STATUS = {
   UNAVAILABLE: 'unavailable',
 }
 
-// Helper function to map seat objects to a quick lookup map (row-col key)
 function createSeatLookup(seats: Seat[]) {
-  // 💡 PERFORMANS: Bu harita, O(1) hızında koltuğu bulmak için gereklidir.
   return seats.reduce((acc, seat) => {
-    // Key format: "r1c2"
     acc[`r${seat.row}c${seat.col}`] = seat
     return acc
   }, {} as Record<string, Seat>)
 }
 
 interface SeatMapProps {
-  // The full validated seat map data from the useSeatMap hook
   seatMapData: RawSeatMap
-  // Handler for when a seat is selected or deselected
   onSeatSelect: (selectedSeats: number[]) => void
-  // The unit price for display (alınan verinin tekrar gönderilmesi)
   unitPrice: number
 }
 
@@ -81,15 +74,11 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
   const { layout, seats } = seatMapData
   const { cols, cells } = layout
 
-  // Memoize the seat data lookup for performance.
   const seatLookup = useMemo(() => createSeatLookup(seats), [seats])
 
-  // Handler for seat clicks
   const handleSeatClick = (seat: Seat) => {
-    // Maksimum 5 koltuk kuralı
-    const MAX_SEATS = 5
+    const MAX_SEATS = 4
 
-    // Ignore taken, unavailable, or non-seat elements
     if (seat.status === SEAT_STATUS.TAKEN || seat.status === SEAT_STATUS.UNAVAILABLE) {
       return
     }
@@ -98,7 +87,6 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
     let newSelection: number[]
 
     if (selectedSeatNos.includes(seatNo)) {
-      // Deselect seat
       newSelection = selectedSeatNos.filter(no => no !== seatNo)
     }
     else {
@@ -128,15 +116,12 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
           const isSelected = selectedSeatNos.includes(seat.no)
 
           if (seat.status === SEAT_STATUS.TAKEN || seat.status === SEAT_STATUS.UNAVAILABLE) {
-            // Dolu veya Kullanılamaz
             return { backgroundColor: cellColors.taken }
           }
           else if (isSelected) {
-            // Seçili
             return { backgroundColor: cellColors.selected, cursor: 'pointer' }
           }
           else {
-            // Boş
             return { backgroundColor: cellColors.empty, cursor: 'pointer' }
           }
         }

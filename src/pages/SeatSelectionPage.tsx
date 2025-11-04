@@ -1,45 +1,20 @@
-import type { PassengerFormData } from '../types/booking.ts'
+import type { PassengerFormData, TicketSaleRequest } from '../types/booking.ts'
 import { Alert, Box, CircularProgress, Grid, Paper, Typography } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import PassengerForm from '../components/PassengerForm.tsx'
 import SeatMap from '../components/SeatMap.tsx'
 import { useSeatSchema } from '../hooks/useSeatSchema.ts'
-/**
- * src/pages/TripDetailsPage.tsx
- * Bu bileşen, sefer detaylarını çeker, koltuk haritasını render eder ve seçilen koltukları yönetir.
- */
 
 export default function SeatSelectionPage() {
-  const { tripId } = useParams<string>()
-  const { data: seatMap, isLoading, isError, error } = useSeatSchema(tripId)
+  const { tripId: routeTripId } = useParams<string>()
+  const navigate = useNavigate()
+  const { data: seatMap, isLoading, isError, error } = useSeatSchema(routeTripId)
   const [selectedSeats, setSelectedSeats] = useState<number[]>([])
 
   const handleSeatSelect = (newSelection: number[]) => {
     setSelectedSeats(newSelection)
   }
-  const handleFormSubmit = useCallback((data: PassengerFormData) => {
-    // 1. Update the local state with the valid form data
-
-    // 2. Prepare the final payload (matching TicketSaleRequestSchema)
-    // NOTE: In a real app, you would perform an API call here.
-    const ticketRequestPayload = {
-      tripId,
-      seats: selectedSeats,
-      contact: data.contact,
-      passengers: data.passengers.map((p, index) => ({
-        ...p,
-        // Assign the selected seat number to the passenger object
-        seat: selectedSeats[index] || p.seat,
-      })),
-    }
-
-    console.log('✅ Form Submitted Successfully. Prepared Ticket Sale Payload:', ticketRequestPayload)
-
-    // After setting the state/preparing payload, you would typically:
-    // a) Call an API to initiate payment
-    // b) Navigate to the payment confirmation page (e.g., router.push('/payment'))
-  }, [tripId, selectedSeats])
 
   const totalPrice = useMemo(() => {
     if (!seatMap)
@@ -47,7 +22,31 @@ export default function SeatSelectionPage() {
     return selectedSeats.length * seatMap.unitPrice
   }, [selectedSeats, seatMap])
 
-  if (!tripId) {
+  const handleFormValidate = useCallback((data: PassengerFormData) => {
+    if (!routeTripId) {
+      console.error('Trip ID is not defined for navigation.')
+      return
+    }
+
+    const ticket: TicketSaleRequest = {
+      tripId: routeTripId,
+      seats: selectedSeats,
+      contact: data.contact,
+      passengers: data.passengers.map((p, index) => ({
+        ...p,
+        seat: selectedSeats[index] || 0,
+      })),
+    }
+
+    navigate('/summary', {
+      state: {
+        ticket,
+        totalPrice,
+      },
+    })
+  }, [routeTripId, selectedSeats, totalPrice, navigate])
+
+  if (!routeTripId) {
     return (<Alert severity="error" sx={{ m: 4 }}>URL'den geçerli bir sefer ID'si alınamadı.</Alert>)
   }
 
@@ -72,7 +71,6 @@ export default function SeatSelectionPage() {
 
   return (
     <Box>
-
       <Typography variant="h4" component="h1" sx={{ color: 'white' }} fontWeight={600} gutterBottom>
         Koltuk Seçimi
         {' '}
@@ -82,7 +80,6 @@ export default function SeatSelectionPage() {
       </Typography>
 
       <Grid container spacing={4} sx={{ mt: 2 }} justifyContent="center">
-        {/* Koltuk Haritası Bölümü (Sol/Geniş Kısım) */}
         <Grid size={{ xs: 12, md: 7 }} sx={{ maxWidth: 500 }}>
           <Paper elevation={4} sx={{ borderRadius: 3, p: 2 }}>
             <SeatMap
@@ -93,7 +90,6 @@ export default function SeatSelectionPage() {
           </Paper>
         </Grid>
 
-        {/* Özet ve Form Bölümü (Sağ Kısım) */}
         <Grid size={{ xs: 12, md: 5 }} sx={{ maxWidth: 500 }}>
           <Paper elevation={4} sx={{ p: 3, borderRadius: 3, bgcolor: '#f5f5f5' }}>
             <Typography variant="h5" gutterBottom fontWeight="bold" color="primary.main">
@@ -102,13 +98,13 @@ export default function SeatSelectionPage() {
             <Box sx={{ my: 2 }}>
               <Typography variant="body1">
                 Seçilen Koltuklar:
-                <span className="font-bold ml-2 text-lg">
+                <span>
                   {selectedSeats.length > 0 ? selectedSeats.join(', ') : 'Seçim yapılmadı'}
                 </span>
               </Typography>
               <Typography variant="body1" sx={{ mt: 1 }}>
                 Koltuk Başı Fiyat:
-                <span className="font-bold ml-2 text-lg">
+                <span>
                   {seatMap.unitPrice}
                   {' '}
                   TL
@@ -128,9 +124,13 @@ export default function SeatSelectionPage() {
             </Box>
 
             <Alert severity="info" sx={{ mt: 2, p: 1, textAlign: 'center' }}>
-              Tek seferde maksimum 5 koltuk seçilebilir.
+              Tek seferde maksimum 4 koltuk seçilebilir.
             </Alert>
-            <PassengerForm onSubmit={handleFormSubmit} selectedSeats={selectedSeats}></PassengerForm>
+
+            {selectedSeats.length > 0 && (
+              <PassengerForm onSubmit={handleFormValidate} selectedSeats={selectedSeats} />
+            )}
+
           </Paper>
         </Grid>
       </Grid>

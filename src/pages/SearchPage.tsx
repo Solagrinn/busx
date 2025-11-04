@@ -1,5 +1,5 @@
 import type { ScheduleSearchFormData } from '../types/schedules.ts'
-import { Typography } from '@mui/material'
+import { CircularProgress, Grid, Paper, Typography } from '@mui/material'
 import { useCallback, useState } from 'react'
 import ScheduleList from '../components/ScheduleList.tsx'
 import SearchForm from '../components/SearchForm.tsx'
@@ -45,24 +45,47 @@ export default function SearchPage() {
   })()
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div>
 
       <Typography variant="h4" component="h1" sx={{ color: 'white' }} fontWeight={600} gutterBottom>
         BusX Sefer Arama
       </Typography>
       <SearchForm onSubmit={handleSearchSubmit} isAgenciesError={isAgenciesError} isAgenciesLoading={isAgenciesLoading} agencies={agencies} />
 
-      <div className="mt-8">
-        {(isSchedulesLoading || isSchedulesError || statusMessage) && (
-          <div className={`p-4 text-center rounded-lg ${isSchedulesError ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'}`}>
-            {statusMessage}
-          </div>
-        )}
+      {(isSchedulesLoading || isSchedulesError || statusMessage) && (
+        <div>
+          {statusMessage}
+        </div>
+      )}
 
-        {hasSearched && schedules && schedules.length > 0 && (
-          <ScheduleList schedules={schedules} isSchedulesError={isSchedulesError} isSchedulesLoading={isSchedulesLoading} isSchedulesFetching={isSchedulesFetching} />
-        )}
-      </div>
+      {isSchedulesLoading && (
+        <Paper
+          sx={{
+            p: 2,
+            borderRadius: 2,
+            backgroundColor: '#efefef',
+
+          }}
+        >
+          <Grid container justifyContent="center">
+            <Grid sx={{ pr: 2 }}><CircularProgress size={42} sx={{ color: 'text.disabled' }} /></Grid>
+            <Grid>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: 600, color: 'text.disabled' }}
+              >
+                Yükleniyor..
+              </Typography>
+            </Grid>
+          </Grid>
+
+        </Paper>
+      )}
+
+      {hasSearched && schedules && schedules.length > 0 && (
+        <ScheduleList schedules={schedules} />
+      )}
+
     </div>
   )
 }
