@@ -225,7 +225,7 @@ export default function PassengerForm({ onSubmit, selectedSeats }: PassengerForm
               fullWidth
               disabled={isSubmitting || selectedSeats.length === 0}
             >
-              {isSubmitting ? 'Gönderiliyor...' : 'Yolcu Bilgilerini Onayla'}
+              {isSubmitting ? 'Gönderiliyor...' : 'Ödeme Adımına Geç'}
             </Button>
           </Grid>
         </Grid>
