@@ -21,7 +21,7 @@ const globalRedStripStyles = (
         backgroundColor: '#f2f3f4',
       },
 
-      '#root': { padding: 4 },
+      '#root': { maxWidth: 1280, margin: '0 auto', padding: { xs: 4, sm: 80 }, textAlign: 'center' },
 
       'body::before': {
         content: '""',
