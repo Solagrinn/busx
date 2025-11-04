@@ -1,6 +1,5 @@
 import type { Agency, ScheduleSearchFormData } from '../types/schedules.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
-
 import {
   Button,
   CircularProgress,
@@ -12,8 +11,9 @@ import {
   Paper,
   Select,
   TextField,
-} from '@mui/material' // MUI Imports
-import { Controller, useForm, useWatch } from 'react-hook-form' // Import Controller
+} from '@mui/material'
+import { Controller, useForm, useWatch } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { ScheduleSearchSchema } from '../types/schedules.ts'
 
 interface SearchFormProps {
@@ -24,6 +24,8 @@ interface SearchFormProps {
 }
 
 export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAgenciesError }: SearchFormProps) {
+  const { t } = useTranslation('search')
+
   const {
     handleSubmit,
     control,
@@ -34,7 +36,7 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
     defaultValues: {
       fromId: '',
       toId: '',
-      date: new Date().toISOString().substring(0, 10), // Todo: cant select lower than today
+      date: new Date().toISOString().substring(0, 10),
     },
   })
 
@@ -45,21 +47,17 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
     return (
       <div>
         <CircularProgress size={24} className="mr-2" />
-        <p>Kalkış/Varış verileri yükleniyor...</p>
+        <p>{t('searchBar.loading')}</p>
       </div>
     )
   }
+
   if (isAgenciesError || !agencies) {
-    return <p>Acente verileri yüklenemedi. Lütfen API'yi kontrol edin.</p>
+    return <p>{t('searchBar.error')}</p>
   }
 
   return (
-    <Paper sx={{
-      p: 2,
-      borderRadius: 8,
-      bgcolor: '#fff',
-    }}
-    >
+    <Paper sx={{ p: 2, borderRadius: 8, bgcolor: '#fff' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
@@ -68,64 +66,66 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
               control={control}
               render={({ field }) => (
                 <FormControl fullWidth error={!!errors.fromId}>
-                  <InputLabel id="fromId-label" shrink>Kalkış Yeri</InputLabel>
+                  <InputLabel id="fromId-label" shrink>
+                    {t('fromLabel')}
+                  </InputLabel>
                   <Select
                     {...field}
                     labelId="fromId-label"
-                    label="Kalkış Yeri"
+                    label={t('fromLabel')}
                     displayEmpty
                     disabled={isSubmitting}
                   >
                     <MenuItem value="" disabled>
-                      Kalkış Seçin
+                      {t('selectFrom')}
                     </MenuItem>
-                    {agencies.filter(a => a.id !== toId).map(agency => (
-                      <MenuItem key={agency.id} value={agency.id}>
-                        {agency.name}
-                      </MenuItem>
-                    ))}
+                    {agencies
+                      .filter(a => a.id !== toId)
+                      .map(agency => (
+                        <MenuItem key={agency.id} value={agency.id}>
+                          {agency.name}
+                        </MenuItem>
+                      ))}
                   </Select>
-                  {errors.fromId?.message && (
-                    <FormHelperText>
-                      {errors.fromId.message}
-                    </FormHelperText>
-                  )}
+                  {errors.fromId?.message && <FormHelperText>{errors.fromId.message}</FormHelperText>}
                 </FormControl>
               )}
             />
           </Grid>
+
           <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
             <Controller
               name="toId"
               control={control}
               render={({ field }) => (
                 <FormControl fullWidth error={!!errors.toId}>
-                  <InputLabel id="toId-label" shrink>Varış Yeri</InputLabel>
+                  <InputLabel id="toId-label" shrink>
+                    {t('toLabel')}
+                  </InputLabel>
                   <Select
                     {...field}
                     labelId="toId-label"
-                    label="Varış Yeri"
+                    label={t('toLabel')}
                     displayEmpty
                     disabled={isSubmitting}
                   >
                     <MenuItem value="" disabled>
-                      Varış Seçin
+                      {t('selectTo')}
                     </MenuItem>
-                    {agencies.filter(a => a.id !== fromId).map(agency => (
-                      <MenuItem key={agency.id} value={agency.id}>
-                        {agency.name}
-                      </MenuItem>
-                    ))}
+                    {agencies
+                      .filter(a => a.id !== fromId)
+                      .map(agency => (
+                        <MenuItem key={agency.id} value={agency.id}>
+                          {agency.name}
+                        </MenuItem>
+                      ))}
                   </Select>
-                  {errors.toId?.message && (
-                    <FormHelperText>
-                      {errors.toId.message}
-                    </FormHelperText>
-                  )}
+                  {errors.toId?.message && <FormHelperText>{errors.toId.message}</FormHelperText>}
                 </FormControl>
               )}
             />
           </Grid>
+
           <Grid container size={{ xs: 12, lg: 4 }}>
             <Grid size={{ xs: 12, sm: 8, lg: 6 }}>
               <Controller
@@ -134,21 +134,19 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    label="Tarih"
+                    label={t('dateLabel')}
                     type="date"
                     fullWidth
                     slotProps={{
-                      inputLabel: {
-                        shrink: true,
-                      },
+                      inputLabel: { shrink: true },
                     }}
                     error={!!errors.date}
                     helperText={errors.date?.message}
                   />
                 )}
-
               />
             </Grid>
+
             <Grid size={{ xs: 12, sm: 4, lg: 6 }}>
               <Button
                 type="submit"
@@ -159,14 +157,11 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
                 sx={{ height: '100%', borderRadius: 4, p: 2 }}
                 startIcon={isSubmitting ? <CircularProgress size={20} color="inherit" /> : null}
               >
-                {isSubmitting ? 'Aranıyor...' : 'Seferleri Bul'}
+                {isSubmitting ? t('searching') : t('findTrips')}
               </Button>
             </Grid>
-
           </Grid>
-
         </Grid>
-
       </form>
     </Paper>
   )

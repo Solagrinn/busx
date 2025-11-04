@@ -1,1 +1,12 @@
-{}
+{
+  "sort": "Sort:",
+  "select": "Select",
+  "priceAsc": "Price (Low → High)",
+  "priceDesc": "Price (High → Low)",
+  "timeAsc": "Time (Earlier)",
+  "timeDesc": "Time (Later)",
+  "noTrips": "No trips found for these criteria",
+  "company": "Company",
+  "availableSeats": "{{count}} Seats",
+  "price": "{{price}} TL"
+}

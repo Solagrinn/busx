@@ -1,0 +1,28 @@
+{
+  "contact": {
+    "title": "Contact Information",
+    "email": "Email",
+    "phone": "Phone",
+    "phonePlaceholder": "e.g. 5xxxxxxxxx"
+  },
+  "passenger": {
+    "title": "Passenger Details",
+    "empty": "Please select seats from the seat map first.",
+    "label": "Passenger",
+    "seat": "Seat No",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "idNo": "National ID",
+    "gender": {
+      "label": "Gender",
+      "male": "Male",
+      "female": "Female"
+    }
+  },
+  "form": {
+    "submit": {
+      "loading": "Submitting...",
+      "next": "Proceed to Payment"
+    }
+  }
+}

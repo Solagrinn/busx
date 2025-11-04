@@ -1,10 +1,7 @@
 import type { RawSeatMap, Seat } from '../types/seats.ts'
 import { Box, Button, Grid, Typography } from '@mui/material'
-/**
- * src/components/SeatMap.tsx
- * Renders the interactive bus seat layout based on API data.
- */
 import React, { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const SEAT_STATUS = {
   EMPTY: 'empty',
@@ -37,7 +34,6 @@ const cellColors = {
 const defaultSeatStyles = {
   'width': 35,
   'height': 35,
-
   '@media (min-width: 500px)': {
     width: 50,
     height: 50,
@@ -53,22 +49,28 @@ function LegendCell({ color, children }: { color: string, children?: React.React
   return (
     <Grid container size={{ xs: 12, sm: 4 }} spacing={1}>
       <Grid>
-        <Box sx={{ ...defaultSeatStyles, 'backgroundColor': color, 'width': 25, 'height': 25, '@media (min-width: 500px)': {
-          width: 25,
-          height: 25,
-        } }}
-        >
-        </Box>
+        <Box
+          sx={{
+            ...defaultSeatStyles,
+            'backgroundColor': color,
+            'width': 25,
+            'height': 25,
+            '@media (min-width: 500px)': {
+              width: 25,
+              height: 25,
+            },
+          }}
+        />
       </Grid>
       <Grid size={{ xs: 'auto' }} alignContent="center">
         <Typography>{children}</Typography>
       </Grid>
     </Grid>
-
   )
 }
 
 export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMapProps) {
+  const { t } = useTranslation(['common', 'seats'])
   const [selectedSeatNos, setSelectedSeatNos] = useState<number[]>([])
 
   const { layout, seats } = seatMapData
@@ -79,9 +81,8 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
   const handleSeatClick = (seat: Seat) => {
     const MAX_SEATS = 4
 
-    if (seat.status === SEAT_STATUS.TAKEN || seat.status === SEAT_STATUS.UNAVAILABLE) {
+    if (seat.status === SEAT_STATUS.TAKEN || seat.status === SEAT_STATUS.UNAVAILABLE)
       return
-    }
 
     const seatNo = seat.no
     let newSelection: number[]
@@ -90,9 +91,8 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
       newSelection = selectedSeatNos.filter(no => no !== seatNo)
     }
     else {
-      if (selectedSeatNos.length >= MAX_SEATS) {
+      if (selectedSeatNos.length >= MAX_SEATS)
         return
-      }
       newSelection = [...selectedSeatNos, seatNo]
     }
 
@@ -109,12 +109,10 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
         return cellColors.corridor
       case 3:
         return cellColors.door
-
       case 0:
       default:
         if (seat) {
           const isSelected = selectedSeatNos.includes(seat.no)
-
           if (seat.status === SEAT_STATUS.TAKEN || seat.status === SEAT_STATUS.UNAVAILABLE) {
             return cellColors.taken
           }
@@ -142,12 +140,9 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
               <Typography
                 fontWeight={500}
                 sx={{ color: 'white' }}
-                fontSize={{
-                  xs: '12px',
-                  sm: '14px',
-                }}
+                fontSize={{ xs: '12px', sm: '14px' }}
               >
-                Şoför
+                {t('driver')}
               </Typography>
             </Box>
           </Grid>
@@ -164,7 +159,6 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
               <Grid size={{ xs: 1 }} key={lookupKey} justifyItems="center">
                 <Button
                   variant="contained"
-
                   onClick={isClickableSeat ? () => handleSeatClick(seat) : undefined}
                   disabled={!isClickableSeat}
                   sx={{
@@ -178,7 +172,7 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
                   }}
                   title={seat ? `${seat.no} - ${seat.status}` : ''}
                 >
-                  <Typography>{seat ? seat.no : (cellType === 3 ? 'Kapı' : '')}</Typography>
+                  <Typography>{seat ? seat.no : cellType === 3 ? t('seats:door') : ''}</Typography>
                 </Button>
               </Grid>
             )
@@ -188,24 +182,23 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
 
       <Box sx={{ mt: 2 }}>
         <Typography variant="body1" color="textSecondary" fontWeight={600}>
-          Seçilen Koltuk Sayısı:
-          {' '}
+          {t('selectedSeats')}
+          :
           {selectedSeatNos.length}
         </Typography>
         <Typography variant="body1" color="textSecondary" fontWeight={600} sx={{ mb: 2 }}>
-          Toplam Tutar:
-          {' '}
+          {t('totalAmount')}
+          :
           {calculateTotal.toFixed(2)}
           {' '}
           TL
-
         </Typography>
       </Box>
 
       <Grid container spacing={1}>
-        <LegendCell color={cellColors.empty}>Boş</LegendCell>
-        <LegendCell color={cellColors.taken}>Dolu</LegendCell>
-        <LegendCell color={cellColors.selected}>Seçili</LegendCell>
+        <LegendCell color={cellColors.empty}>{t('seats:empty')}</LegendCell>
+        <LegendCell color={cellColors.taken}>{t('seats:taken')}</LegendCell>
+        <LegendCell color={cellColors.selected}>{t('seats:selected')}</LegendCell>
       </Grid>
     </Box>
   )

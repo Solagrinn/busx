@@ -1,3 +1,12 @@
 {
-  "available": "{{count}} Seats"
+  "selectionSummary": "Selection Summary",
+  "selectedSeats": "Selected Seats",
+  "noSelection": "No seats selected",
+  "pricePerSeat": "Price per Seat",
+  "totalAmount": "Total Amount",
+  "maxSeatsInfo": "You can select up to 4 seats per booking.",
+  "empty": "Empty",
+  "taken": "Taken",
+  "selected": "Selected",
+  "door": "Door"
 }

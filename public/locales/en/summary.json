@@ -1,0 +1,11 @@
+{
+  "title": "Summary",
+  "successTitle": "Ticket Purchased Successfully!",
+  "successMessage": "Your transaction has been completed successfully.",
+  "pnrLabel": "PNR",
+  "errorTitle": "Purchase Error:",
+  "errorMessage": "Could not connect to the server. Please try again.",
+  "confirmButton": "CONFIRM PAYMENT & GET TICKET",
+  "editButton": "Edit Information",
+  "loading": "Processing..."
+}

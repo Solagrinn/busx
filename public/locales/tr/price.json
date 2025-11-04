@@ -1,0 +1,27 @@
+{
+  "title": "Bilet Onayı ve Ödeme",
+  "subtitle": "Lütfen bilgileri kontrol edin ve satın alma işlemini tamamlayın.",
+  "trip": {
+    "title": "Sefer Bilgileri",
+    "id": "Sefer ID",
+    "seats": "Seçilen Koltuklar"
+  },
+  "total": {
+    "label": "Toplam Tutar",
+    "currency": "TL"
+  },
+  "passenger": {
+    "title": "Yolcu ve İletişim",
+    "seat": "Koltuk",
+    "id": "TCKN",
+    "gender": {
+      "label": "Cinsiyet",
+      "male": "Erkek",
+      "female": "Kadın"
+    }
+  },
+  "contact": {
+    "email": "E-posta",
+    "phone": "Telefon"
+  }
+}

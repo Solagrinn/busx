@@ -4,5 +4,8 @@
     "priceDesc": "Price (High → Low)",
     "timeEarly": "Time (Early)",
     "timeLate": "Time (Late)"
-  }
+  },
+  "driver": "Driver",
+  "totalAmount": "Total Amount",
+  "selectedSeats": "Selected Seats"
 }

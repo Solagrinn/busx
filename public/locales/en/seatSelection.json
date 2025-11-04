@@ -1,0 +1,7 @@
+{
+  "title": "Seat Selection",
+  "invalidTripId": "A valid trip ID could not be retrieved from the URL.",
+  "loading": "Loading seat information...",
+  "errorTitle": "An error occurred while loading the seat map:",
+  "unknownError": "Unknown Error"
+}

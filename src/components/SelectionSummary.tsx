@@ -1,26 +1,35 @@
 import { Alert, Box, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 interface SelectionSummaryProps {
   unitPrice: number
   totalPrice: number
   selectedSeats: number[]
 }
-export default function SelectionSummary({ unitPrice, totalPrice, selectedSeats }: SelectionSummaryProps) {
-  return (
 
+export default function SelectionSummary({ unitPrice, totalPrice, selectedSeats }: SelectionSummaryProps) {
+  const { t } = useTranslation(['common', 'seats'])
+
+  return (
     <>
       <Typography variant="h5" gutterBottom fontWeight="bold" color="primary.main">
-        Seçim Özeti
+        {t('seats:selectionSummary')}
       </Typography>
+
       <Box sx={{ my: 2 }}>
         <Typography variant="body1">
-          Seçilen Koltuklar:
+          {t('seats:selectedSeats')}
+          :
+          {' '}
           <span>
-            {selectedSeats.length > 0 ? selectedSeats.join(', ') : 'Seçim yapılmadı'}
+            {selectedSeats.length > 0 ? selectedSeats.join(', ') : t('seats:noSelection')}
           </span>
         </Typography>
+
         <Typography variant="body1" sx={{ mt: 1 }}>
-          Koltuk Başı Fiyat:
+          {t('seats:pricePerSeat')}
+          :
+          {' '}
           <span>
             {unitPrice}
             {' '}
@@ -29,9 +38,19 @@ export default function SelectionSummary({ unitPrice, totalPrice, selectedSeats 
         </Typography>
       </Box>
 
-      <Box sx={{ borderTop: '2px solid #ccc', pt: 2, mt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box
+        sx={{
+          borderTop: '2px solid #ccc',
+          pt: 2,
+          mt: 3,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Typography variant="h5" fontWeight="bold">
-          Toplam Tutar:
+          {t('totalAmount')}
+          :
         </Typography>
         <Typography variant="h4" fontWeight="bold" color="error.main">
           {totalPrice.toFixed(2)}
@@ -41,10 +60,8 @@ export default function SelectionSummary({ unitPrice, totalPrice, selectedSeats 
       </Box>
 
       <Alert severity="info" sx={{ mt: 2, p: 1, textAlign: 'center' }}>
-        Tek seferde maksimum 4 koltuk seçilebilir.
+        {t('seats:maxSeatsInfo')}
       </Alert>
-
     </>
-
   )
 }

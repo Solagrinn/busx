@@ -1,6 +1,7 @@
 import type { PassengerFormData, TicketSaleRequest } from '../types/booking.ts'
 import { Alert, Box, CircularProgress, Grid, Paper, Typography } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import PassengerForm from '../components/PassengerForm.tsx'
 import SeatMap from '../components/SeatMap.tsx'
@@ -8,6 +9,7 @@ import SelectionSummary from '../components/SelectionSummary.tsx'
 import { useSeatSchema } from '../hooks/useSeatSchema.ts'
 
 export default function SeatSelectionPage() {
+  const { t } = useTranslation(['seatSelection'])
   const { tripId: routeTripId } = useParams<string>()
   const navigate = useNavigate()
   const { data: seatMap, isLoading, isError, error } = useSeatSchema(routeTripId)
@@ -48,14 +50,20 @@ export default function SeatSelectionPage() {
   }, [routeTripId, selectedSeats, totalPrice, navigate])
 
   if (!routeTripId) {
-    return (<Alert severity="error" sx={{ m: 4 }}>URL'den geçerli bir sefer ID'si alınamadı.</Alert>)
+    return (
+      <Alert severity="error" sx={{ m: 4 }}>
+        {t('invalidTripId', { ns: 'seatSelection' })}
+      </Alert>
+    )
   }
 
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 8 }}>
         <CircularProgress />
-        <Typography variant="h6" sx={{ ml: 2 }}>Koltuk bilgileri yükleniyor...</Typography>
+        <Typography variant="h6" sx={{ ml: 2 }}>
+          {t('loading', { ns: 'seatSelection' })}
+        </Typography>
       </Box>
     )
   }
@@ -64,18 +72,25 @@ export default function SeatSelectionPage() {
     return (
       <Alert severity="error" sx={{ m: 4 }}>
         <Typography variant="body1" fontWeight="bold">
-          Koltuk haritası yüklenirken bir hata oluştu:
-          {' '}
+          {t('errorTitle', { ns: 'seatSelection' })}
         </Typography>
-        <Typography variant="body2">{error?.message || 'Bilinmeyen Hata'}</Typography>
+        <Typography variant="body2">
+          {error?.message || t('unknownError', { ns: 'seatSelection' })}
+        </Typography>
       </Alert>
     )
   }
 
   return (
     <Box>
-      <Typography variant="h4" component="h1" sx={{ color: 'white' }} fontWeight={600} gutterBottom>
-        Koltuk Seçimi
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ color: 'white' }}
+        fontWeight={600}
+        gutterBottom
+      >
+        {t('title', { ns: 'seatSelection' })}
         {' '}
         -
         {' '}
@@ -95,12 +110,18 @@ export default function SeatSelectionPage() {
 
         <Grid size={{ xs: 12, md: 5 }} sx={{ maxWidth: 500 }}>
           <Paper elevation={4} sx={{ p: 3, borderRadius: 3, bgcolor: '#f5f5f5' }}>
-            <SelectionSummary selectedSeats={selectedSeats} totalPrice={totalPrice} unitPrice={seatMap.unitPrice}></SelectionSummary>
+            <SelectionSummary
+              selectedSeats={selectedSeats}
+              totalPrice={totalPrice}
+              unitPrice={seatMap.unitPrice}
+            />
 
             {selectedSeats.length > 0 && (
-              <PassengerForm onSubmit={handleFormValidate} selectedSeats={selectedSeats} />
+              <PassengerForm
+                onSubmit={handleFormValidate}
+                selectedSeats={selectedSeats}
+              />
             )}
-
           </Paper>
         </Grid>
       </Grid>

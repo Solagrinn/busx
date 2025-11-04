@@ -1,6 +1,7 @@
 import type { TicketSaleRequest } from '../types/booking.ts'
 import { Alert, Box, Button, CircularProgress, Grid, Paper, Typography } from '@mui/material'
 import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router'
 import PriceSummary from '../components/PriceSummary.tsx'
 import { useTicketPurchase } from '../hooks/useTicketPurchase.ts'
@@ -9,7 +10,9 @@ interface PurchaseRouterState {
   ticket: TicketSaleRequest
   totalPrice: number
 }
+
 export default function SummaryPage() {
+  const { t } = useTranslation(['summary'])
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -50,34 +53,41 @@ export default function SummaryPage() {
     <Box sx={{ mt: 8 }}>
       <Grid container justifyContent="center">
         <Grid size={{ xs: 12, md: 8, lg: 6 }}>
-          <Paper sx={{
-            px: { xs: 1, md: 4 },
-            py: 4,
-            borderRadius: 3,
-            bgcolor: '#fff',
-            boxShadow: '0 10px 20px rgba(0,0,0,0.05)',
-          }}
+          <Paper
+            sx={{
+              px: { xs: 1, md: 4 },
+              py: 4,
+              borderRadius: 3,
+              bgcolor: '#fff',
+              boxShadow: '0 10px 20px rgba(0,0,0,0.05)',
+            }}
           >
-            <PriceSummary ticket={ticket} totalPrice={totalPrice}></PriceSummary>
+            <PriceSummary ticket={ticket} totalPrice={totalPrice} />
 
             {purchaseSuccess && (
               <Alert severity="success" sx={{ mb: 2, justifyContent: 'center' }}>
-
-                <Typography variant="body1" fontWeight="bold">Bilet Başarıyla Satın Alındı!</Typography>
-                <Typography variant="body2">{purchaseResponse?.message}</Typography>
+                <Typography variant="body1" fontWeight="bold">
+                  {t('successTitle', { ns: 'summary' })}
+                </Typography>
                 <Typography variant="body2">
-                  PNR:
-                  {' '}
+                  {purchaseResponse?.message || t('successMessage', { ns: 'summary' })}
+                </Typography>
+                <Typography variant="body2">
+                  {t('pnrLabel', { ns: 'summary' })}
+                  :
                   {purchaseResponse?.pnr}
                 </Typography>
-
               </Alert>
             )}
 
             {isPurchaseError && (
               <Alert severity="error" sx={{ mb: 2 }}>
-                <Typography variant="body1" fontWeight="bold">Satın Alma Hatası:</Typography>
-                <Typography variant="body2">{purchaseError?.message || 'Sunucuya bağlanılamadı. Lütfen tekrar deneyin.'}</Typography>
+                <Typography variant="body1" fontWeight="bold">
+                  {t('errorTitle', { ns: 'summary' })}
+                </Typography>
+                <Typography variant="body2">
+                  {purchaseError?.message || t('errorMessage', { ns: 'summary' })}
+                </Typography>
               </Alert>
             )}
 
@@ -91,8 +101,13 @@ export default function SummaryPage() {
               disabled={isPurchaseLoading || purchaseSuccess}
             >
               {isPurchaseLoading
-                ? <CircularProgress size={24} color="inherit" />
-                : 'ÖDEMEYİ ONAYLA VE BİLETİ AL'}
+                ? (
+                    <>
+                      <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />
+                      {t('loading', { ns: 'summary' })}
+                    </>
+                  )
+                : t('confirmButton', { ns: 'summary' })}
             </Button>
 
             <Button
@@ -102,9 +117,8 @@ export default function SummaryPage() {
               onClick={() => navigate(-1)}
               disabled={isPurchaseLoading || purchaseSuccess}
             >
-              Bilgileri Düzenle
+              {t('editButton', { ns: 'summary' })}
             </Button>
-
           </Paper>
         </Grid>
       </Grid>

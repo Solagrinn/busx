@@ -1,1 +1,12 @@
-{}
+{
+  "sort": "Sırala:",
+  "select": "Seçiniz",
+  "priceAsc": "Fiyat (Artan)",
+  "priceDesc": "Fiyat (Azalan)",
+  "timeAsc": "Saat (Erken)",
+  "timeDesc": "Saat (Geç)",
+  "noTrips": "Bu kriterlerde bir sefer yok",
+  "company": "Firma",
+  "availableSeats": "{{count}} Koltuk",
+  "price": "{{price}} TL"
+}

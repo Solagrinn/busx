@@ -4,5 +4,16 @@
   "error": "An error occurred",
   "noResults": "No trips found for these criteria.",
   "prompt": "Please select departure, arrival, and date to search.",
-  "loadingTitle": "Loading..."
+  "loadingTitle": "Loading...",
+  "searchBar": {
+    "loading": "Loading departure/arrival data...",
+    "error": "Failed to load agency data. Please check the API."
+  },
+  "fromLabel": "Departure",
+  "toLabel": "Arrival",
+  "selectFrom": "Select Departure",
+  "selectTo": "Select Arrival",
+  "dateLabel": "Date",
+  "searching": "Searching...",
+  "findTrips": "Find Trips"
 }

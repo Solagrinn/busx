@@ -1,0 +1,28 @@
+{
+  "contact": {
+    "title": "İletişim Bilgileri",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "phonePlaceholder": "örn: 5xxxxxxxxx"
+  },
+  "passenger": {
+    "title": "Yolcu Bilgileri",
+    "empty": "Lütfen önce koltuk haritasından koltuk seçimi yapın.",
+    "label": "Yolcu",
+    "seat": "Koltuk No",
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "idNo": "TC Kimlik No",
+    "gender": {
+      "label": "Cinsiyet",
+      "male": "Erkek",
+      "female": "Kadın"
+    }
+  },
+  "form": {
+    "submit": {
+      "loading": "Gönderiliyor...",
+      "next": "Ödeme Adımına Geç"
+    }
+  }
+}

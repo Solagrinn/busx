@@ -1,0 +1,11 @@
+{
+  "title": "Özet",
+  "successTitle": "Bilet Başarıyla Satın Alındı!",
+  "successMessage": "İşlem başarıyla tamamlandı.",
+  "pnrLabel": "PNR",
+  "errorTitle": "Satın Alma Hatası:",
+  "errorMessage": "Sunucuya bağlanılamadı. Lütfen tekrar deneyin.",
+  "confirmButton": "ÖDEMEYİ ONAYLA VE BİLETİ AL",
+  "editButton": "Bilgileri Düzenle",
+  "loading": "İşlem devam ediyor..."
+}

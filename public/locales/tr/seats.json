@@ -1,3 +1,13 @@
 {
-  "available": "{{count}} Koltuk"
+  "available": "{{count}} Koltuk",
+  "door": "Kapı",
+  "empty": "Boş",
+  "taken": "Dolu",
+  "selected": "Seçili",
+  "selectionSummary": "Seçim Özeti",
+  "selectedSeats": "Seçilen Koltuklar",
+  "noSelection": "Seçim yapılmadı",
+  "pricePerSeat": "Koltuk Başı Fiyat",
+  "totalAmount": "Toplam Tutar",
+  "maxSeatsInfo": "Tek seferde maksimum 4 koltuk seçilebilir."
 }

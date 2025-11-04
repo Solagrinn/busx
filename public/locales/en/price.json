@@ -1,0 +1,27 @@
+{
+  "title": "Ticket Confirmation & Payment",
+  "subtitle": "Please review your details and complete the purchase.",
+  "trip": {
+    "title": "Trip Information",
+    "id": "Trip ID",
+    "seats": "Selected Seats"
+  },
+  "total": {
+    "label": "Total Amount",
+    "currency": "TRY"
+  },
+  "passenger": {
+    "title": "Passenger & Contact",
+    "seat": "Seat",
+    "id": "National ID",
+    "gender": {
+      "label": "Gender",
+      "male": "Male",
+      "female": "Female"
+    }
+  },
+  "contact": {
+    "email": "Email",
+    "phone": "Phone"
+  }
+}

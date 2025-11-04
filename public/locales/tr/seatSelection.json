@@ -1,0 +1,7 @@
+{
+  "title": "Koltuk Seçimi",
+  "invalidTripId": "URL'den geçerli bir sefer ID'si alınamadı.",
+  "loading": "Koltuk bilgileri yükleniyor...",
+  "errorTitle": "Koltuk haritası yüklenirken bir hata oluştu:",
+  "unknownError": "Bilinmeyen Hata"
+}

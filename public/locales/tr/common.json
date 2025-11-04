@@ -4,5 +4,8 @@
     "priceDesc": "Fiyat (Azalan)",
     "timeEarly": "Saat (Erken)",
     "timeLate": "Saat (Geç)"
-  }
+  },
+  "driver": "Şoför",
+  "totalAmount": "Toplam Tutar",
+  "selectedSeats": "Seçilen Koltuk Sayısı"
 }

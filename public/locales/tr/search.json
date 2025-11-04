@@ -4,5 +4,16 @@
   "error": "Hata oluştu",
   "noResults": "Bu kriterlere uygun sefer bulunamadı.",
   "prompt": "Lütfen kalkış, varış ve tarihi seçerek arama yapınız.",
-  "loadingTitle": "Yükleniyor.."
+  "loadingTitle": "Yükleniyor..",
+  "searchBar": {
+    "loading": "Kalkış/Varış verileri yükleniyor...",
+    "error": "Acente verileri yüklenemedi. Lütfen API'yi kontrol edin."
+  },
+  "fromLabel": "Kalkış Yeri",
+  "toLabel": "Varış Yeri",
+  "selectFrom": "Kalkış Seçin",
+  "selectTo": "Varış Seçin",
+  "dateLabel": "Tarih",
+  "searching": "Aranıyor...",
+  "findTrips": "Seferleri Bul"
 }
