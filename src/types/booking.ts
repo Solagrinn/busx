@@ -30,7 +30,14 @@ export const TicketSaleRequestSchema = z.object({
     .min(1, 'En az bir koltuk seçilmelidir.'),
 }).extend(PassengerFormSchema.shape)
 
+export const TicketSaleResponseSchema = z.object({
+  ok: z.boolean(),
+  pnr: z.string().optional(),
+  message: z.string(),
+})
+
 export type ContactInfo = z.infer<typeof ContactInfoSchema>
 export type Passenger = z.infer<typeof PassengerSchema>
 export type PassengerFormData = z.infer<typeof PassengerFormSchema>
 export type TicketSaleRequest = z.infer<typeof TicketSaleRequestSchema>
+export type TicketSaleResponse = z.infer<typeof TicketSaleResponseSchema>
