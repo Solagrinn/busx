@@ -2,10 +2,11 @@ import { GlobalStyles, ThemeProvider } from '@mui/material'
 import { QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
+import App from './app/App.tsx'
 import { startWorker } from './mocks/browser'
 import { queryClient } from './services/queryClient.ts'
 import theme from './theme.ts'
+import 'i18next'
 
 async function enableMocking() {
   if (import.meta.env.MODE === 'development') {

@@ -1,0 +1,8 @@
+{
+  "title": "BusX Trip Search",
+  "loading": "Loading trips...",
+  "error": "An error occurred",
+  "noResults": "No trips found for these criteria.",
+  "prompt": "Please select departure, arrival, and date to search.",
+  "loadingTitle": "Loading..."
+}

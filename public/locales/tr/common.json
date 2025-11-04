@@ -1,0 +1,8 @@
+{
+  "sort": {
+    "priceAsc": "Fiyat (Artan)",
+    "priceDesc": "Fiyat (Azalan)",
+    "timeEarly": "Saat (Erken)",
+    "timeLate": "Saat (Geç)"
+  }
+}

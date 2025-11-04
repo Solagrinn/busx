@@ -1,0 +1,8 @@
+{
+  "sort": {
+    "priceAsc": "Price (Low → High)",
+    "priceDesc": "Price (High → Low)",
+    "timeEarly": "Time (Early)",
+    "timeLate": "Time (Late)"
+  }
+}

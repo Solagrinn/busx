@@ -1,0 +1,8 @@
+{
+  "title": "BusX Sefer Arama",
+  "loading": "Seferler yükleniyor...",
+  "error": "Hata oluştu",
+  "noResults": "Bu kriterlere uygun sefer bulunamadı.",
+  "prompt": "Lütfen kalkış, varış ve tarihi seçerek arama yapınız.",
+  "loadingTitle": "Yükleniyor.."
+}
