@@ -10,7 +10,7 @@ function LanguageSwitcher() {
   }
 
   return (
-    <Button onClick={toggleLanguage}>
+    <Button variant="outlined" color="primary" onClick={toggleLanguage}>
       {i18n.language === 'tr' ? 'EN' : 'TR'}
     </Button>
   )

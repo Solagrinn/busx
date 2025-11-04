@@ -65,7 +65,7 @@ export default function PriceSummary({ ticket, totalPrice }: PriceSummaryProps) 
           </Typography>
 
           {ticket.passengers.map(p => (
-            <Box key={p.idNo} sx={{ mb: 1.5, p: 1, bgcolor: '#f5f5f5', borderRadius: 1 }}>
+            <Box key={p.idNo} sx={{ mb: 1.5, p: 1, borderRadius: 1 }}>
               <Typography variant="body1">
                 {t('passenger.seat')}
                 {' '}

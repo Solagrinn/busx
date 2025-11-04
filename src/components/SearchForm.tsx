@@ -57,7 +57,7 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
   }
 
   return (
-    <Paper sx={{ p: 2, borderRadius: 8, bgcolor: '#fff' }}>
+    <Paper sx={{ p: 2, borderRadius: 8 }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6, lg: 4 }}>

@@ -1,11 +1,9 @@
-import { GlobalStyles, ThemeProvider } from '@mui/material'
 import { QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './app/App.tsx'
 import { startWorker } from './mocks/browser'
 import { queryClient } from './services/queryClient.ts'
-import theme from './theme.ts'
 import 'i18next'
 
 async function enableMocking() {
@@ -15,41 +13,11 @@ async function enableMocking() {
   return Promise.resolve()
 }
 
-const globalRedStripStyles = (
-  <GlobalStyles
-    styles={{
-      'body': {
-        backgroundColor: '#f2f3f4',
-      },
-
-      '#root': { maxWidth: 1280, margin: '0 auto', padding: { xs: 4, sm: 80 }, textAlign: 'center' },
-
-      'body::before': {
-        content: '""',
-        display: 'block',
-
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-
-        height: '150px',
-        backgroundColor: 'rgb(204, 0, 0)',
-
-        zIndex: -1,
-      },
-    }}
-  />
-)
-
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          {globalRedStripStyles}
-          <App />
-        </ThemeProvider>
+        <App />
       </QueryClientProvider>
     </React.StrictMode>,
   )

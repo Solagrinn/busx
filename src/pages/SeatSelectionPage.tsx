@@ -109,7 +109,7 @@ export default function SeatSelectionPage() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 5 }} sx={{ maxWidth: 500 }}>
-          <Paper elevation={4} sx={{ p: 3, borderRadius: 3, bgcolor: '#f5f5f5' }}>
+          <Paper elevation={4} sx={{ p: 3, borderRadius: 3 }}>
             <SelectionSummary
               selectedSeats={selectedSeats}
               totalPrice={totalPrice}

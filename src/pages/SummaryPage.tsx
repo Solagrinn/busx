@@ -58,7 +58,6 @@ export default function SummaryPage() {
               px: { xs: 1, md: 4 },
               py: 4,
               borderRadius: 3,
-              bgcolor: '#fff',
               boxShadow: '0 10px 20px rgba(0,0,0,0.05)',
             }}
           >

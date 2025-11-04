@@ -44,7 +44,7 @@ export default function ScheduleList({ schedules }: ScheduleListProps) {
   }, [schedules, sortOption])
 
   return (
-    <Paper sx={{ p: 2, mt: 2, borderRadius: 6, backgroundColor: '#fdfdfd' }}>
+    <Paper elevation={3} sx={{ p: 2, mt: 2, borderRadius: 6 }}>
       <Grid container spacing={2} alignItems="center" sx={{ mb: 2 }}>
         <Grid>
           <Typography variant="body1" fontWeight={600}>
@@ -78,7 +78,7 @@ export default function ScheduleList({ schedules }: ScheduleListProps) {
       )}
 
       {sortedSchedules.map(schedule => (
-        <Paper key={schedule.id} sx={{ p: 2, mb: 2, borderRadius: 2, backgroundColor: '#fff' }}>
+        <Paper key={schedule.id} sx={{ p: 2, mb: 2, borderRadius: 2 }} elevation={4}>
           <Grid container>
             <Grid size="grow">
               <Grid container spacing={1} alignItems="center">

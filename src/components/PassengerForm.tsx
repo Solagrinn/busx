@@ -69,7 +69,7 @@ export default function PassengerForm({ onSubmit, selectedSeats }: PassengerForm
   }, [selectedSeats, fields.length, getValues, replace, setValue])
 
   return (
-    <Paper sx={{ p: { xs: 1, sm: 2, md: 3 }, m: -2, mt: 2, borderRadius: 2, bgcolor: '#fff' }}>
+    <Paper sx={{ p: { xs: 1, sm: 2, md: 3 }, m: -2, mt: 2, borderRadius: 2 }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={4}>
           {/* Contact Info */}
