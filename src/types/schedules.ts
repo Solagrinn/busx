@@ -1,14 +1,22 @@
+import i18next from 'i18next' // ✅ direct import for schema-level i18n
 import { z } from 'zod'
 
-export const ScheduleSearchSchema = z.object({
-  fromId: z.string().min(1, 'Kalkış yeri seçimi zorunludur.'),
-  toId: z.string().min(1, 'Varış yeri seçimi zorunludur.'),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Tarih YYYY-MM-DD formatında olmalıdır.'),
-}).refine(data => data.fromId !== data.toId, {
-  message: 'Kalkış ve varış yerleri aynı olamaz.',
-  path: ['toId'],
-})
-
+export const ScheduleSearchSchema = z
+  .object({
+    fromId: z
+      .string()
+      .min(1, i18next.t('schedule.fromId', { ns: 'validation' })),
+    toId: z
+      .string()
+      .min(1, i18next.t('schedule.toId', { ns: 'validation' })),
+    date: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, i18next.t('schedule.date', { ns: 'validation' })),
+  })
+  .refine(data => data.fromId !== data.toId, {
+    message: i18next.t('schedule.sameRoute', { ns: 'validation' }),
+    path: ['toId'],
+  })
 export const AgencySchema = z.object({
   id: z.string().min(1, 'Ajans ID gereklidir.'),
   name: z.string().min(2, 'Ajans adı gereklidir.'),

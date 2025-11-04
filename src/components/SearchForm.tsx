@@ -23,8 +23,14 @@ interface SearchFormProps {
   isAgenciesError: boolean
 }
 
-export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAgenciesError }: SearchFormProps) {
+export default function SearchForm({
+  onSubmit,
+  agencies,
+  isAgenciesLoading,
+  isAgenciesError,
+}: SearchFormProps) {
   const { t } = useTranslation('search')
+  const { t: v } = useTranslation('validation') // ✅ second namespace for validation
 
   const {
     handleSubmit,
@@ -60,6 +66,7 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
     <Paper sx={{ p: 2, borderRadius: 8 }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
+          {/* FROM */}
           <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
             <Controller
               name="fromId"
@@ -87,12 +94,15 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
                         </MenuItem>
                       ))}
                   </Select>
-                  {errors.fromId?.message && <FormHelperText>{errors.fromId.message}</FormHelperText>}
+                  {errors.fromId?.message && (
+                    <FormHelperText>{v(errors.fromId.message)}</FormHelperText>
+                  )}
                 </FormControl>
               )}
             />
           </Grid>
 
+          {/* TO */}
           <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
             <Controller
               name="toId"
@@ -120,12 +130,15 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
                         </MenuItem>
                       ))}
                   </Select>
-                  {errors.toId?.message && <FormHelperText>{errors.toId.message}</FormHelperText>}
+                  {errors.toId?.message && (
+                    <FormHelperText>{v(errors.toId.message)}</FormHelperText>
+                  )}
                 </FormControl>
               )}
             />
           </Grid>
 
+          {/* DATE + SUBMIT */}
           <Grid container size={{ xs: 12, lg: 4 }}>
             <Grid size={{ xs: 12, sm: 8, lg: 6 }}>
               <Controller
@@ -141,7 +154,7 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
                       inputLabel: { shrink: true },
                     }}
                     error={!!errors.date}
-                    helperText={errors.date?.message}
+                    helperText={errors.date?.message && v(errors.date.message)}
                   />
                 )}
               />
@@ -155,7 +168,13 @@ export default function SearchForm({ onSubmit, agencies, isAgenciesLoading, isAg
                 fullWidth
                 disabled={isSubmitting}
                 sx={{ height: '100%', borderRadius: 4, p: 2 }}
-                startIcon={isSubmitting ? <CircularProgress size={20} color="inherit" /> : null}
+                startIcon={
+                  isSubmitting
+                    ? (
+                        <CircularProgress size={20} color="inherit" />
+                      )
+                    : null
+                }
               >
                 {isSubmitting ? t('searching') : t('findTrips')}
               </Button>
