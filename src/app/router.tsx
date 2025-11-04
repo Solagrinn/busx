@@ -1,10 +1,9 @@
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
-import SeatSelectionPage from '../pages/SeatSelectionPage.tsx'
 
 const SearchPage = lazy(() => import('../pages/SearchPage'))
-/* const SeatSelectionPage = lazy(() => import('../pages/SeatSelectionPage'))
-const SummaryPage = lazy(() => import('../pages/SummaryPage')) */
+const SeatSelectionPage = lazy(() => import('../pages/SeatSelectionPage'))
+const SummaryPage = lazy(() => import('../pages/SummaryPage'))
 
 const AppRouter: React.FC = () => {
   return (
@@ -14,7 +13,7 @@ const AppRouter: React.FC = () => {
           <Route path="/" element={<SearchPage />} />
 
           <Route path="/trip/:tripId" element={<SeatSelectionPage />} />
-
+          <Route path="/summary" element={<SummaryPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
 
         </Routes>
