@@ -1,4 +1,4 @@
-import type { PassengerFormData } from '../types/booking.ts'
+import type { PassengerFormData } from '../types/booking'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Box,
@@ -13,10 +13,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { PassengerFormSchema } from '../types/booking.ts'
+import { getPassengerFormSchema } from '../types/booking'
 
 interface PassengerFormProps {
   onSubmit: (data: PassengerFormData) => void
@@ -24,7 +24,9 @@ interface PassengerFormProps {
 }
 
 export default function PassengerForm({ onSubmit, selectedSeats }: PassengerFormProps) {
-  const { t } = useTranslation('passenger')
+  const { t, i18n } = useTranslation('passenger')
+
+  const { PassengerFormSchema } = useMemo(() => getPassengerFormSchema(), [i18n.language])
 
   const {
     handleSubmit,
