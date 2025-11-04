@@ -1,5 +1,5 @@
 import type { RawSeatMap, Seat } from '../types/seats.ts'
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 /**
  * src/components/SeatMap.tsx
  * Renders the interactive bus seat layout based on API data.
@@ -100,15 +100,15 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
     onSeatSelect(newSelection)
   }
 
-  const getCellClasses = (row: number, col: number, cellType: number) => {
+  const getCellColor = (row: number, col: number, cellType: number) => {
     const lookupKey = `r${row + 1}c${col + 1}`
     const seat = seatLookup[lookupKey]
 
     switch (cellType) {
       case 2:
-        return { backgroundColor: cellColors.corridor }
+        return cellColors.corridor
       case 3:
-        return { backgroundColor: cellColors.door }
+        return cellColors.door
 
       case 0:
       default:
@@ -116,13 +116,13 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
           const isSelected = selectedSeatNos.includes(seat.no)
 
           if (seat.status === SEAT_STATUS.TAKEN || seat.status === SEAT_STATUS.UNAVAILABLE) {
-            return { backgroundColor: cellColors.taken }
+            return cellColors.taken
           }
           else if (isSelected) {
-            return { backgroundColor: cellColors.selected, cursor: 'pointer' }
+            return cellColors.selected
           }
           else {
-            return { backgroundColor: cellColors.empty, cursor: 'pointer' }
+            return cellColors.empty
           }
         }
         return 'transparent'
@@ -139,7 +139,16 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
         <Grid container size={{ xs: 12 }}>
           <Grid size={{ xs: 1 }} justifyItems="center">
             <Box sx={{ backgroundColor: 'primary.main', ...defaultSeatStyles }}>
-              <Typography fontWeight={500} sx={{ color: 'white' }}>Şoför</Typography>
+              <Typography
+                fontWeight={500}
+                sx={{ color: 'white' }}
+                fontSize={{
+                  xs: '12px',
+                  sm: '14px',
+                }}
+              >
+                Şoför
+              </Typography>
             </Box>
           </Grid>
         </Grid>
@@ -148,24 +157,29 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
           rowArr.map((cellType, colIndex) => {
             const lookupKey = `r${rowIndex + 1}c${colIndex + 1}`
             const seat = seatLookup[lookupKey]
-
-            const isClickableSeat = seat && (seat.status === SEAT_STATUS.EMPTY)
+            const isClickableSeat = seat && seat.status === SEAT_STATUS.EMPTY
+            const cellColor = getCellColor(rowIndex, colIndex, cellType)
 
             return (
               <Grid size={{ xs: 1 }} key={lookupKey} justifyItems="center">
-                <Box
-                  key={lookupKey}
+                <Button
+                  variant="contained"
 
-                  sx={{ backgroundColor: getCellClasses(rowIndex, colIndex, cellType), ...defaultSeatStyles }}
                   onClick={isClickableSeat ? () => handleSeatClick(seat) : undefined}
+                  disabled={!isClickableSeat}
+                  sx={{
+                    ...defaultSeatStyles,
+                    'backgroundColor': cellColor,
+                    'minWidth': 0,
+                    '&.Mui-disabled': {
+                      color: cellType === 3 ? 'primary.main' : 'white',
+                      backgroundColor: cellColor,
+                    },
+                  }}
                   title={seat ? `${seat.no} - ${seat.status}` : ''}
                 >
                   <Typography>{seat ? seat.no : (cellType === 3 ? 'Kapı' : '')}</Typography>
-
-                  {seat && selectedSeatNos.includes(seat.no) && (
-                    <span>✓</span>
-                  )}
-                </Box>
+                </Button>
               </Grid>
             )
           }),
