@@ -4,8 +4,7 @@
  * of API calls, responses, and errors.
  */
 
-// TODO: make this global
-const API_BASE_URL = 'https://busx/api'
+const API_BASE_URL = import.meta.env.VITE_BASE_URL
 
 /**
  * Custom error class for API responses that return a non-2xx status code.
