@@ -8,5 +8,6 @@
   "noTrips": "Bu kriterlerde bir sefer yok",
   "company": "Firma",
   "availableSeats": "{{count}} Koltuk",
-  "price": "{{price}} TL"
+  "price": "{{price}} TL",
+  "priceForAriaLabel": "{{company}} seferi: {{departure}} - {{arrival}}, fiyat {{price}} TL. Koltuk seçimine geç."
 }

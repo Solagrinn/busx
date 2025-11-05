@@ -8,5 +8,6 @@
   "noTrips": "No trips found for these criteria",
   "company": "Company",
   "availableSeats": "{{count}} Seats",
-  "price": "{{price}} TRY"
+  "price": "{{price}} TRY",
+  "priceForAriaLabel": "{{company}} trip: {{departure}} - {{arrival}}, price {{price}} TL. Proceed to seat selection."
 }

@@ -13,6 +13,7 @@
   "toLabel": "Arrival",
   "selectFrom": "Select Departure",
   "selectTo": "Select Arrival",
+  "selectDate": "Select Date",
   "dateLabel": "Date",
   "searching": "Searching...",
   "findTrips": "Find Trips"

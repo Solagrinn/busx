@@ -85,6 +85,7 @@ export default function SearchForm({
                     label={t('fromLabel')}
                     displayEmpty
                     disabled={isSubmitting}
+                    aria-label={t('selectFrom')}
                   >
                     <MenuItem value="" disabled>
                       {t('selectFrom')}
@@ -92,7 +93,7 @@ export default function SearchForm({
                     {agencies
                       .filter(a => a.id !== toId)
                       .map(agency => (
-                        <MenuItem key={agency.id} value={agency.id}>
+                        <MenuItem key={agency.id} value={agency.id} aria-label={agency.name}>
                           {agency.name}
                         </MenuItem>
                       ))}
@@ -121,6 +122,7 @@ export default function SearchForm({
                     label={t('toLabel')}
                     displayEmpty
                     disabled={isSubmitting}
+                    aria-label={t('selectTo')}
                   >
                     <MenuItem value="" disabled>
                       {t('selectTo')}
@@ -128,7 +130,7 @@ export default function SearchForm({
                     {agencies
                       .filter(a => a.id !== fromId)
                       .map(agency => (
-                        <MenuItem key={agency.id} value={agency.id}>
+                        <MenuItem key={agency.id} value={agency.id} aria-label={agency.name}>
                           {agency.name}
                         </MenuItem>
                       ))}
@@ -151,6 +153,7 @@ export default function SearchForm({
                   <TextField
                     {...field}
                     label={t('dateLabel')}
+                    aria-label={t('selectDate')}
                     type="date"
                     fullWidth
                     slotProps={{

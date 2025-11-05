@@ -3,9 +3,10 @@ import { Box } from '@mui/material'
 interface DropdownArrowButtonProps {
   onClick: () => void
   size: number
+  ariaLabel: string
 }
 
-export default function ArrowIcon({ onClick, size }: DropdownArrowButtonProps) {
+export default function ArrowIcon({ onClick, size, ariaLabel }: DropdownArrowButtonProps) {
   const ArrowIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -25,6 +26,7 @@ export default function ArrowIcon({ onClick, size }: DropdownArrowButtonProps) {
   return (
     <Box
       onClick={onClick}
+      aria-label={ariaLabel}
       component="button"
       sx={{
         'display': 'flex',

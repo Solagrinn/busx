@@ -58,12 +58,13 @@ export default function ScheduleList({ schedules }: ScheduleListProps) {
             <Select
               value={sortOption}
               label={t('sort')}
+              aria-label={t('sort')}
               onChange={e => setSortOption(e.target.value as typeof sortOption)}
             >
-              <MenuItem value="priceAsc">{t('priceAsc')}</MenuItem>
-              <MenuItem value="priceDesc">{t('priceDesc')}</MenuItem>
-              <MenuItem value="timeAsc">{t('timeAsc')}</MenuItem>
-              <MenuItem value="timeDesc">{t('timeDesc')}</MenuItem>
+              <MenuItem value="priceAsc" aria-label={t('priceAsc')}>{t('priceAsc')}</MenuItem>
+              <MenuItem value="priceDesc" aria-label={t('priceDesc')}>{t('priceDesc')}</MenuItem>
+              <MenuItem value="timeAsc" aria-label={t('timeAsc')}>{t('timeAsc')}</MenuItem>
+              <MenuItem value="timeDesc" aria-label={t('timeDesc')}>{t('timeDesc')}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -93,6 +94,7 @@ export default function ScheduleList({ schedules }: ScheduleListProps) {
                     {format(schedule.departure, 'HH:mm')}
                     {' '}
                     -
+                    {' '}
                     {format(schedule.arrival, 'HH:mm')}
                   </Typography>
                 </Grid>
@@ -112,7 +114,7 @@ export default function ScheduleList({ schedules }: ScheduleListProps) {
             </Grid>
 
             <Grid size="auto" alignContent="center">
-              <ArrowIcon onClick={() => handleSelectTrip(schedule.id)} size={40} />
+              <ArrowIcon onClick={() => handleSelectTrip(schedule.id)} size={40} ariaLabel={t('priceForAriaLabel', { price: schedule.price, departure: schedule.departure, arrival: schedule.arrival, company: schedule.company })} />
             </Grid>
           </Grid>
         </Paper>
