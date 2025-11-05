@@ -6,8 +6,8 @@
 - run the project using `npm run dev`
 - (optional): run tests by using `npm test`
 
-### ** Tüm akışı karşılayabilecek arama: İstanbul - Alibeyköy -> Ankara - AŞTİ  (02.11.2025) **
-
+###  Tüm akışı karşılayabilecek arama: İstanbul - Alibeyköy -> Ankara - AŞTİ  (28.11.2025) 
+(validation için bugünden önceki tarihi seçemiyoruz, eğer 28.11.2025'i geçtiysek lütfen mockData'daki bilet değerlerini bugünden sonraki tarih ile değiştirin)
 # Teknik tercihler
 Added antfu Eslint config for one liner eslint configuration. https://github.com/antfu/eslint-config
 ```json
