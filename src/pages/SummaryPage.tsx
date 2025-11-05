@@ -34,7 +34,7 @@ export default function SummaryPage() {
   } = useTicketPurchase()
 
   const handlePurchase = useCallback(async () => {
-    if (!ticket.tripId || !ticket.seats.length || !ticket.contact || !ticket.passengers.length || totalPrice) {
+    if (!ticket.tripId || !ticket.seats.length || !ticket.contact || !ticket.passengers.length || !totalPrice) {
       console.error('Purchase pre-requisites missing.')
       return
     }
