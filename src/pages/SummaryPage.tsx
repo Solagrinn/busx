@@ -99,6 +99,7 @@ export default function SummaryPage() {
               sx={{ height: 56, mb: 1 }}
               onClick={handlePurchase}
               disabled={isPurchaseLoading || purchaseSuccess}
+              aria-label={t('confirmButton', { ns: 'summary' })}
             >
               {isPurchaseLoading
                 ? (
@@ -117,6 +118,7 @@ export default function SummaryPage() {
               sx={{ mt: 1 }}
               onClick={() => navigate(-1)}
               disabled={isPurchaseLoading || purchaseSuccess}
+              aria-label={t('editButton', { ns: 'summary' })}
             >
               {t('editButton', { ns: 'summary' })}
             </Button>
