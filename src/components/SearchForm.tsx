@@ -12,6 +12,7 @@ import {
   Select,
   TextField,
 } from '@mui/material'
+import { useMemo } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { ScheduleSearchSchema } from '../types/schedules.ts'
@@ -31,6 +32,8 @@ export default function SearchForm({
 }: SearchFormProps) {
   const { t } = useTranslation('search')
   const { t: v } = useTranslation('validation')
+
+  const minDate = useMemo(() => new Date().toISOString().split('T')[0], [])
 
   const {
     handleSubmit,
@@ -152,6 +155,7 @@ export default function SearchForm({
                     fullWidth
                     slotProps={{
                       inputLabel: { shrink: true },
+                      htmlInput: { min: minDate },
                     }}
                     error={!!errors.date}
                     helperText={errors.date?.message && v('schedule.date')}
