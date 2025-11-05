@@ -20,7 +20,6 @@ function createSeatLookup(seats: Seat[]) {
 interface SeatMapProps {
   seatMapData: RawSeatMap
   onSeatSelect: (selectedSeats: number[]) => void
-  unitPrice: number
 }
 
 const cellColors = {
@@ -69,11 +68,11 @@ function LegendCell({ color, children }: { color: string, children?: React.React
   )
 }
 
-export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMapProps) {
+export default function SeatMap({ seatMapData, onSeatSelect }: SeatMapProps) {
   const { t } = useTranslation(['common', 'seats'])
   const [selectedSeatNos, setSelectedSeatNos] = useState<number[]>([])
 
-  const { layout, seats } = seatMapData
+  const { layout, seats, unitPrice } = seatMapData
   const { cols, cells } = layout
 
   const seatLookup = useMemo(() => createSeatLookup(seats), [seats])
@@ -170,6 +169,7 @@ export default function SeatMap({ seatMapData, onSeatSelect, unitPrice }: SeatMa
                       backgroundColor: cellColor,
                     },
                   }}
+                  aria-label={seat ? `seat ${seat.no}, ${seat.status}` : ''}
                   title={seat ? `${seat.no} - ${seat.status}` : ''}
                 >
                   <Typography>{seat ? seat.no : cellType === 3 ? t('seats:door') : ''}</Typography>

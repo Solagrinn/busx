@@ -103,7 +103,6 @@ export default function SeatSelectionPage() {
             <SeatMap
               seatMapData={seatMap}
               onSeatSelect={handleSeatSelect}
-              unitPrice={seatMap.unitPrice}
             />
           </Paper>
         </Grid>
