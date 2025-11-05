@@ -38,7 +38,7 @@ export const handlers = [
 
   http.get(`https://busx/api/seatSchemas/:tripId`, ({ params }) => {
     const { tripId } = params
-    const schema = seatSchemas.find(s => s.tripId === tripId)
+    const schema = seatSchemas
     if (!schema) {
       return new HttpResponse(`Seat schema not found for trip: ${tripId}`, { status: 404 })
     }

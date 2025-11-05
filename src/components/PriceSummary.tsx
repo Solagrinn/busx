@@ -46,7 +46,7 @@ export default function PriceSummary({ ticket, totalPrice }: PriceSummaryProps) 
                 </Typography>
               </Grid>
               <Grid size={{ xs: 12, sm: 'auto' }}>
-                <Typography variant="h4" fontWeight="bold" color="error.main">
+                <Typography variant="h4" fontWeight="bold" color="error.main" aria-label={t('total.label')}>
                   {totalPrice.toFixed(2)}
                   {' '}
                   {t('total.currency')}

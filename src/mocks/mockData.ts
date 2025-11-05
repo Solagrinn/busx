@@ -39,7 +39,12 @@ export const schedules = [
   },
 ]
 
-export const seatSchemas = [{
+export const seatSchemas: {
+  tripId: string
+  layout: { rows: number, cols: number, cells: number[][] }
+  seats: { no: number, row: number, col: number, status: 'empty' | 'taken' | 'selected' | 'unavailable' }[]
+  unitPrice: number
+} = {
   tripId: 'TRIP-1001',
   layout: {
     rows: 10,
@@ -106,7 +111,7 @@ export const seatSchemas = [{
     { no: 39, row: 10, col: 5, status: 'empty' },
   ],
   unitPrice: 695,
-}]
+}
 
 export const ticketPurchase = {
   ok: true,

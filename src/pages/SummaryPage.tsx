@@ -34,7 +34,7 @@ export default function SummaryPage() {
   } = useTicketPurchase()
 
   const handlePurchase = useCallback(async () => {
-    if (!ticket.tripId || !ticket.seats.length || !ticket.contact || !ticket.passengers.length) {
+    if (!ticket.tripId || !ticket.seats.length || !ticket.contact || !ticket.passengers.length || totalPrice) {
       console.error('Purchase pre-requisites missing.')
       return
     }
@@ -45,7 +45,7 @@ export default function SummaryPage() {
     catch (error) {
       console.error('❌ Ticket Sale Mutation Failed.', error)
     }
-  }, [finalizePurchase, ticket])
+  }, [finalizePurchase, ticket, totalPrice])
 
   const purchaseSuccess = !!purchaseResponse && purchaseResponse.ok
 

@@ -1,0 +1,34 @@
+{
+  "email": {
+    "invalid": "Geçerli bir e-posta adresi girin."
+  },
+  "phone": {
+    "invalid": "Telefon numarası 10 haneli olmalıdır (örn: 5xxxxxxxxx)."
+  },
+  "seat": {
+    "invalid": "Koltuk numarası geçerli olmalıdır.",
+    "min": "En az bir koltuk seçilmelidir."
+  },
+  "firstname": {
+    "short": "Ad en az 2 karakter olmalıdır."
+  },
+  "lastname": {
+    "short": "Soyad en az 2 karakter olmalıdır."
+  },
+  "id": {
+    "invalid": "TC Kimlik Numarası 11 haneli olmalıdır."
+  },
+  "passenger": {
+    "min": "En az bir yolcu bilgisi girilmelidir.",
+    "max": "Maksimum 5 yolcuya izin verilir."
+  },
+  "tripId": {
+    "required": "Sefer ID gereklidir."
+  },
+  "schedule": {
+    "fromId": "Kalkış noktası gereklidir.",
+    "toId": "Varış noktası gereklidir.",
+    "date": "Tarih YYYY-AA-GG formatında olmalıdır.",
+    "sameRoute": "Kalkış ve varış noktaları aynı olamaz."
+  }
+}

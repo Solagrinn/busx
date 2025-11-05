@@ -52,7 +52,7 @@ export default function SelectionSummary({ unitPrice, totalPrice, selectedSeats 
           {t('totalAmount')}
           :
         </Typography>
-        <Typography variant="h4" fontWeight="bold" color="error.main">
+        <Typography variant="h4" fontWeight="bold" color="error.main" aria-label={t('totalAmount')}>
           {totalPrice.toFixed(2)}
           {' '}
           TRY

@@ -30,7 +30,7 @@ export default function SearchForm({
   isAgenciesError,
 }: SearchFormProps) {
   const { t } = useTranslation('search')
-  const { t: v } = useTranslation('validation') // ✅ second namespace for validation messages
+  const { t: v } = useTranslation('validation')
 
   const {
     handleSubmit,
