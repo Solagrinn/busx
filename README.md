@@ -14,12 +14,12 @@ Busx is a highly robust and extremely fast frontend for a ticket buying applicat
 (validation için bugünden önceki tarihi seçemiyoruz, eğer 28.11.2025'i geçtiysek lütfen mockData'daki bilet değerlerini bugünden sonraki tarih ile değiştirin)
 # Teknik tercihler
 
-Stack: React, Vite, TypeScript
-Libraries: React Router, Tanstack Query, Zod + React Hook Form, date-fns
-UI: MUI
-Localization: I18next (TR, EN)
-Accessibility: Form labels, Aria tags, Keyboard navigation
-Tests: Vitest + Testing Library
+- Stack: React, Vite, TypeScript
+- Libraries: React Router, Tanstack Query, Zod + React Hook Form, date-fns
+- UI: MUI
+- Localization: I18next (TR, EN)
+- Accessibility: Form labels, Aria tags, Keyboard navigation
+- Tests: Vitest + Testing Library
 
 Bonus: Added antfu Eslint config for one liner eslint configuration. https://github.com/antfu/eslint-config
 ```json
