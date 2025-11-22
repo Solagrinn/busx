@@ -1,8 +1,8 @@
 # Busx
 Busx is a highly robust and extremely fast frontend for a ticket buying application.
-With over 98 points average on Google Lighthouse 
-& 0 Unnecessary Re-Renders, Meaningful memoizations, Lazy loading.
-& Strongly typed using Typescript
+- With over 98 points average on Google Lighthouse 
+- & 0 Unnecessary Re-Renders, Meaningful memoizations, Lazy loading.
+- & Strongly typed using Typescript
 
 
 # Kurulum & Çalıştırma
