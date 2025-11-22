@@ -1,4 +1,8 @@
-
+# Busx
+Busx is a highly robust and extremely fast frontend for a ticket buying application.
+With over 98 points average on Google Lighthouse 
+& 0 Unnecessary Re-Renders, Meaningful memoizations, Lazy loading.
+& Strongly typed using Typescript
 
 
 # Kurulum & Çalıştırma
@@ -19,8 +23,8 @@ Added antfu Eslint config for one liner eslint configuration. https://github.com
 ```
 
 # Notlar
-- Sitenin sol üstünde Dark mode ve Dil değişim butonu(canlı) bulunuyor.
-- Biletin PDF çıktısı sorunsuz alınıyor.
+- Sitenin sol üstünde Dark mode ve Dil değişim butonu(canlı) bulunuyor. (I18Next for live language switching)
+- Biletin PDF çıktısı sorunsuz alınıyor. (Custom CSS for Printing)
 
 
 # Mimari şema
